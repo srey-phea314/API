@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <title>Contact Us - Past&Now</title>
+</head>
+
+<body class="bg-gray-100">
+    <div class="bar bg-pink-700 py-2 border-b">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between px-4 text-sm text-white-600">
+            <div class="space-x-4 flex items-center justify-center sm:justify-start mb-2 sm:mb-0" style="padding:15px;">
+                <span style="color:white;">📞 Customer Service</span>
+                <span style="color:white;">🚚 Free Shipping</span>
+                <span style="color:white;">💸 Save 60% Off</span>
+            </div>
+            <div class="flex items-center space-x-4 justify-center sm:justify-end">
+                <span style="color:white;">💬 Live Chat</span>
+                <span>❤️</span>
+                <span>🛒</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header bg-white shadow">
+        <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold text-pink-600 mb-4 sm:mb-0">Past&Now</h1>
+            <nav class="space-x-4 sm:space-x-6 text-gray-700 flex flex-wrap justify-center mb-4 sm:mb-0" style="font-weight: bold;">
+                <a href="{% url 'index' %}#home" class="hover:text-pink-600 transition-colors duration-200">Home</a>
+                <a href="{% url 'index' %}#shop" class="hover:text-pink-600 transition-colors duration-200">Shop</a>
+                <a href="{% url 'index' %}#blog" class="hover:text-pink-600 transition-colors duration-200">Blog</a>
+                <a href="{% url 'contact' %}"
+                    class="hover:text-pink-600 transition-colors duration-200 font-semibold" style="font-weight: bold;">Contact</a>
+            </nav>
+
+            <div class="header-icons">
+                <div class="cart-icon-wrapper" style="position: relative;">
+                    <div id="cart-icon" style="position: relative; cursor: pointer;">
+                        <a href="{% url 'cart' %}" style="position: relative;">
+                            🛒 <span id="cart-count"
+                                style="background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; position: absolute; top: -10px; right: -10px;">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Main content area -->
+<main class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+  <!-- Contact Info Section -->
+  <section class="mt-20 mb-12">
+    <div class="bg-pink-50 rounded-xl shadow-lg p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Contact Details -->
+      <div class="border border-pink-200 rounded-lg p-6 shadow-sm bg-white">
+        <h2 class="text-2xl font-semibold text-pink-600 mb-4">Contact Details</h2>
+        <p class="mb-2 text-gray-700"><strong>Phone:</strong> +855 12 345 678</p>
+        <p class="mb-2 text-gray-700"><strong>Email:</strong> support@Past&Now.com</p>
+        <p class="text-gray-700"><strong>Address:</strong> 123 Glow Street, Phnom Penh, Cambodia</p>
+      </div>
+
+      <!-- Opening Hours -->
+      <div class="border border-pink-200 rounded-lg p-6 shadow-sm bg-white">
+        <h2 class="text-2xl font-semibold text-pink-600 mb-4">Opening Hours</h2>
+        <p class="mb-2 text-gray-700">Mon - Fri: 9:00 AM – 7:00 PM</p>
+        <p class="mb-2 text-gray-700">Saturday: 10:00 AM – 5:00 PM</p>
+        <p class="text-gray-700">Sunday: Closed</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get in Touch + Map Section -->
+  <section class="py-10" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+
+        <!-- Get in Touch Form -->
+        <div>
+          <h2 class="text-3xl font-bold text-pink-600 mb-6">Get in Touch</h2>
+          <p class="text-gray-600 mb-8 leading-relaxed">
+            We'd love to hear from you. Fill out the form below and we'll get back to you soon!
+          </p>
+          <form action="#" method="POST" class="space-y-5 bg-white shadow-xl rounded-2xl p-8 max-w-xl w-full">
+            <input type="text" name="name" placeholder="Your Name" required
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all bg-white/90 placeholder-gray-500" />
+            <input type="email" name="email" placeholder="Your Email" required
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all bg-white/90 placeholder-gray-500" />
+            <textarea name="message" rows="6" placeholder="Your Message" required
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all bg-white/90 placeholder-gray-500"></textarea>
+            <button type="submit"
+              class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all w-full">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Google Map -->
+        <div class="rounded-xl overflow-hidden shadow-lg h-full min-h-[300px] md:min-h-[450px]">
+          <iframe class="w-full h-full"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4824028046215!2d104.89169757481868!3d11.030233854011962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109512b7c48c571%3A0x6a00c5d08f47bfe1!2sPhnom%20Penh%2C%20Cambodia!5e0!3m2!1sen!2skh!4v1625568450123!5m2!1sen!2skh"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bg-pink-600 text-gray-100 py-12 font-sans">
+  <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- About -->
+    <div>
+      <h3 class="text-2xl font-semibold text-white mb-4">GlowCare</h3>
+      <p class="mb-2">Your trusted skincare partner. Bringing you quality, natural beauty solutions with love and care.</p>
+      <p class="mb-2">We believe in enhancing your natural glow with products made from the finest ingredients, tested for safety and effectiveness.</p>
+      <p class="mb-6">Follow us for skincare tips, new product launches, and exclusive offers!</p>
+      <div class="flex space-x-4">
+        <a href="https://facebook.com/glowcare" target="_blank" class="hover:text-blue-300" aria-label="Facebook">
+          <i class="fab fa-facebook fa-lg"></i>
+        </a>
+        <a href="https://instagram.com/glowcare" target="_blank" class="hover:text-pink-300" aria-label="Instagram">
+          <i class="fab fa-instagram fa-lg"></i>
+        </a>
+        <a href="https://twitter.com/glowcare" target="_blank" class="hover:text-blue-200" aria-label="Twitter">
+          <i class="fab fa-twitter fa-lg"></i>
+        </a>
+        <a href="https://youtube.com/glowcare" target="_blank" class="hover:text-red-300" aria-label="YouTube">
+          <i class="fab fa-youtube fa-lg"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h4 class="text-xl font-semibold text-white mb-4">Quick Links</h4>
+      <ul class="space-y-2">
+        <li><a href="#home" class="hover:text-white transition">Home</a></li>
+        <li><a href="#products" class="hover:text-white transition">Products</a></li>
+        <li><a href="#blogs" class="hover:text-white transition">Blogs</a></li>
+        <li><a href="#about" class="hover:text-white transition">About Us</a></li>
+        <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
+        <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
+        <li><a href="#terms" class="hover:text-white transition">Terms & Conditions</a></li>
+        <li><a href="#privacy" class="hover:text-white transition">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div>
+      <h4 class="text-xl font-semibold text-white mb-4">Contact Info</h4>
+      <p class="mb-2">Email: <a href="mailto:glowcare@example.com" class="text-white-200 hover:underline">glowcare@example.com</a></p>
+      <p class="mb-2">Phone: <a href="tel:+855123456789" class="text-white-200 hover:underline">+855 123 456 789</a></p>
+      <p class="mb-2">Location: Phnom Penh, Cambodia</p>
+      <p>Support Hours: Mon - Fri, 9:00 AM - 6:00 PM</p>
+    </div>
+
+    <!-- Newsletter -->
+    <div>
+      <h4 class="text-xl font-semibold text-white mb-4">Newsletter</h4>
+      <p class="mb-4">Subscribe to our newsletter for the latest skincare tips and exclusive offers.</p>
+      <form action="#" method="post" class="flex flex-col space-y-3">
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          class="px-4 py-2 rounded bg-pink-500 text-white placeholder-pink-200 focus:outline-none focus:ring-2 focus:ring-white-300"
+        />
+        <button
+          type="submit"
+          class="bg-white text-pink-600 font-semibold py-2 rounded hover:bg-pink-100 transition"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="mt-12 border-t border-pink-400 pt-6 text-center text-pink-200 text-sm">
+    <p>© 2025 GlowCare. All rights reserved.</p>
+    <p>Designed with <span class="text-red-300">❤️</span> for healthy, glowing skin.</p>
+  </div>
+</footer>
+
+
+    <!-- AOS Animation JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000 });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const nameInput = form.elements['name'];
+                const emailInput = form.elements['email'];
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+
+                const namePattern = /^[A-Za-z\s]{2,}$/;
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!namePattern.test(name)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: 'Please enter a valid name (at least 2 letters).',
+                        confirmButtonColor: '#ec4899' // Matches pink-600
+                    });
+                    nameInput.focus();
+                    return;
+                }
+
+                if (!emailPattern.test(email)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Email',
+                        text: 'Please enter a valid email address.',
+                        confirmButtonColor: '#ec4899' // Matches pink-600
+                    });
+                    emailInput.focus();
+                    return;
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Message Sent!',
+                    text: 'Thank you for reaching out to us �',
+                    confirmButtonColor: '#ec4899' // Matches pink-600
+                });
+
+                form.reset();
+            });
+        });
+    </script>
+
+    <!-- Your custom JavaScript (assuming script.js exists and is correctly linked) -->
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,704 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <style>
+    /* Your CSS including .animate-cute-pop and order-history button styles here */
+    @keyframes cute-pop {
+      0% {
+        opacity: 0;
+        transform: scale(0.6) translateY(20px);
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .animate-cute-pop {
+      animation: cute-pop 0.4s ease-out;
+    }
+
+    .order-history {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      margin: 20px;
+      color: white;
+      background-color: rgb(251, 95, 121);
+      padding: 10px 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      width: 200px;
+    }
+
+    .order-history:hover {
+      background-color: #d90909;
+    }
+
+    .order-history i {
+      margin-top: 2px;
+      color: #dfdcd7;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+  <div class="top-bar bg-white py-2 border-b">
+    <div class="container mx-auto flex justify-between px-4 text-sm text-white-600">
+      <div class="space-x-4 flex items-center">
+        <span>📞 Customer Service</span>
+        <span>🚚 Free Shipping</span>
+        <span>💸 Save 60% Off</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span>💬 Live Chat</span>
+        <span>❤️</span>
+        <span>🛒</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="main-header bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-pink-600">Past&Now</h1>
+      <nav class="space-x-6 text-gray-700">
+        <a href="{% url 'index' %}#home">Home</a>
+        <a href="{% url 'index' %}#shop">Shop</a>
+        <a href="{% url 'index' %}#blog">Blog</a>
+        <a href="{% url 'contact' %}" class="hover:text-green-600">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- order history -->
+  <div class="flex justify-end mt-6 relative mr-20">
+    <button onclick="showOrderHistory()" id="orderHistoryBtn"
+      class="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-lg shadow-md relative">
+      📜 View Order History
+      <span id="orderNotifCount"
+        class="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
+    </button>
+  </div>
+
+  <!-- 🧾 Order History Section -->
+  <section id="orderHistoryContainer" class="mt-10 bg-white p-6 rounded-xl shadow-md border border-gray-200 hidden">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold text-gray-800">📦 Your Orders</h2>
+      <button onclick="hideOrderHistory()" class="text-gray-500 hover:text-red-600 text-sm font-medium transition">
+        ❌ Close
+      </button>
+    </div>
+    <div id="orderHistoryContent" class="grid gap-4">
+    </div>
+  </section>
+
+
+  <!-- Invoice Modal -->
+  <div id="invoiceModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full animate-cute-pop relative">
+      <button onclick="hideInvoice()"
+        class="absolute top-2 right-3 text-xl text-gray-400 hover:text-red-500">&times;</button>
+      <h2 class="text-2xl font-bold text-pink-700 mb-4">🧾 Invoice</h2>
+      <div id="invoiceContent" class="space-y-4 max-h-[400px] overflow-y-auto">
+        <!-- Invoice details will be injected here -->
+      </div>
+      <div class="mt-4 flex justify-end gap-2">
+        <button onclick="printInvoice()" class="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">
+          🖨️ Print
+        </button>
+        <button onclick="hideInvoice()" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-10 text-center">🛒 Shopping Cart</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b text-gray-700 font-semibold">
+              <th class="py-3">Product</th>
+              <th class="py-3">Price</th>
+              <th class="py-3">Quantity</th>
+              <th class="py-3">Subtotal</th>
+              <th class="py-3"></th>
+            </tr>
+          </thead>
+          <tbody id="cart-body"></tbody>
+        </table>
+        <!-- Cart Buttons -->
+        <div class="flex mt-4">
+          <button onclick="showConfirmModal()" class="text-red-500 hover:underline ml-auto" style="font-size: 20px;">
+            Delete Items
+          </button>
+        </div>
+
+        <div id="confirmModal"
+          class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+          <div class="bg-white p-6 rounded-xl shadow-xl text-center w-80 animate-cute-pop">
+            <img
+              src="https://media2.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZW9zY3A5Y21ybWhjazllbTVmbHlxb25zdWZqaHZtcTVranV5amptMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/iJJ6E58EttmFqgLo96/giphy.webp"
+              alt="Sad Cute" class="w-24 h-24 mx-auto mb-4 rounded-full shadow-sm" />
+            <p class="mb-3 text-gray-800 font-medium text-lg">
+              Are you sure you want to clear the cart?
+            </p>
+            <p class="text-sm text-gray-500 mb-5">All items will be deleted 😢</p>
+            <div class="flex justify-between gap-4">
+              <button onclick="confirmClearCart()"
+                class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 w-full">Yes</button>
+              <button onclick="hideConfirmModal()"
+                class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-pink-400 w-full">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-8 p-6 bg-pink-50 rounded-lg shadow-sm border border-pink-200">
+          <h3 class="text-xl font-semibold text-pink-700 mb-4">Customer Information</h3>
+
+          <div class="mb-6">
+            <label for="customerName" class="block text-pink-900 font-semibold mb-2 tracking-wide">Full Name</label>
+            <input type="text" id="customerName" placeholder="Enter your full name" class="w-full px-4 py-3 rounded-lg border border-pink-300 bg-white placeholder-pink-400
+                     focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500
+                     transition duration-200 ease-in-out" autocomplete="name" />
+          </div>
+          <div>
+            <label for="customerPhone" class="block text-pink-900 font-semibold mb-2 tracking-wide">Phone Number</label>
+            <input type="tel" id="customerPhone" placeholder="Enter your phone number" class="w-full px-4 py-3 rounded-lg border border-pink-300 bg-white placeholder-pink-400
+                     focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500
+                     transition duration-200 ease-in-out" autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="qrSelect" class="block text-gray-700 font-semibold mb-1">Select QR Code</label>
+          <select id="qrSelect" class="form-select border rounded px-3 py-2 w-full">
+            <option disabled selected>Select QR</option>
+          </select>
+
+          <div id="qrImagePreviewContainer" class="mt-2"></div>
+        </div>
+
+        <div class="mb-6">
+          <label for="qrUpload" class="block text-gray-700 font-semibold mb-1">Or Upload Your Own QR Code Image:</label>
+          <input type="file" id="qrUpload" accept="image/*" class="form-control border rounded px-3 py-2 w-full" />
+        </div>
+
+        <div class="mt-6 flex justify-between items-center flex-wrap gap-4">
+          <input type="text" id="coupon" placeholder="Coupon Code" class="w-full px-4 py-3 rounded-lg border border-pink-300 bg-white placeholder-pink-400
+                     focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500
+                     transition duration-200 ease-in-out" />
+          <div class="space-x-4">
+            <button onclick="applyCoupon()" class="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">Apply
+              Coupon</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-auto">
+        <h2 class="text-2xl font-extrabold text-gray-900 mb-6 border-b pb-3">Order Summary</h2>
+
+        <ul class="text-gray-700 space-y-3 mb-6">
+          <li class="flex justify-between items-center">
+            <span class="font-semibold">Items</span>
+            <span id="summary-items" class="text-gray-900 font-medium">0</span>
+          </li>
+          <li class="flex justify-between items-center">
+            <span class="font-semibold">Sub Total</span>
+            <span id="summary-subtotal" class="text-gray-900 font-medium">$0.00</span>
+          </li>
+          <li class="flex justify-between items-center">
+            <span class="font-semibold">Shipping</span>
+            <span class="text-gray-900 font-medium">$0.00</span>
+          </li>
+          <li class="flex justify-between items-center">
+            <span class="font-semibold">Taxes</span>
+            <span class="text-gray-900 font-medium">$0.00</span>
+          </li>
+          <li class="flex justify-between items-center text-green-600 font-semibold">
+            <span>Coupon Discount</span>
+            <span id="summary-discount">-$0.00</span>
+          </li>
+        </ul>
+
+        <div class="border-t pt-4 flex justify-between items-center text-2xl font-extrabold text-gray-900 mb-6">
+          <span>Total</span>
+          <span id="summary-total">$0.00</span>
+        </div>
+
+        <button onclick="checkout()"
+          class="block bg-pink-600 hover:bg-pink-700 transition-colors duration-300 text-white text-center py-3 rounded-lg font-semibold shadow-md w-full">
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    document.cookie.split(';').forEach(cookie => {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+      }
+    });
+  }
+  return cookieValue;
+}
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartBody = document.getElementById("cart-body");
+const summaryItems = document.getElementById("summary-items");
+const summarySubtotal = document.getElementById("summary-subtotal");
+const summaryDiscount = document.getElementById("summary-discount");
+const summaryTotal = document.getElementById("summary-total");
+
+let subtotal = 0;
+let discount = 0;
+
+function renderCart() {
+  cartBody.innerHTML = '';
+  let totalItems = 0;
+  subtotal = 0;
+
+  if (cart.length === 0) {
+    cartBody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-gray-500">Your cart is empty.</td></tr>`;
+  }
+
+  cart.forEach((item, index) => {
+    const itemTotal = item.quantity * item.price;
+    subtotal += itemTotal;
+    totalItems += item.quantity;
+
+    cartBody.innerHTML += `
+      <tr class="border-b">
+        <td class="py-4">
+          <div class="font-medium text-gray-900">${item.name}</div>
+          <div class="text-sm text-gray-500">${item.weight || ''}</div>
+        </td>
+        <td class="py-4">$${item.price.toFixed(2)}</td>
+        <td class="py-4">
+          <div class="flex items-center space-x-2">
+            <button onclick="updateQty(${index}, -1)" class="px-2 py-1 bg-gray-200 rounded">−</button>
+            <span>${item.quantity}</span>
+            <button onclick="updateQty(${index}, 1)" class="px-2 py-1 bg-gray-200 rounded">+</button>
+          </div>
+        </td>
+        <td class="py-4">$${itemTotal.toFixed(2)}</td>
+        <td class="py-4">
+          <button onclick="removeItem(${index})" class="text-red-500 hover:underline">×</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  summaryItems.textContent = totalItems;
+  summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
+  summaryDiscount.textContent = `-$${discount.toFixed(2)}`;
+  summaryTotal.textContent = `$${(subtotal - discount).toFixed(2)}`;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function updateQty(index, delta) {
+  cart[index].quantity += delta;
+  if (cart[index].quantity <= 0) cart.splice(index, 1);
+  renderCart();
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  renderCart();
+}
+
+// Clear Cart
+function showConfirmModal() {
+  document.getElementById('confirmModal').classList.remove('hidden');
+}
+
+function hideConfirmModal() {
+  document.getElementById('confirmModal').classList.add('hidden');
+}
+
+function confirmClearCart() {
+  clearCart();
+  hideConfirmModal();
+}
+
+function clearCart() {
+  cart = [];
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+  console.log("Cart cleared");
+}
+
+// Coupon
+function applyCoupon() {
+  const code = document.getElementById("coupon").value.trim().toLowerCase();
+  if (code === "save10") {
+    discount = 10.00;
+    renderCart();
+    alert("Coupon applied!");
+  } else {
+    discount = 0;
+    renderCart();
+    alert("Invalid coupon.");
+  }
+}
+
+// Load QR Codes from backend
+fetch('/qrcodes/')
+  .then(res => res.json())
+  .then(data => {
+    const qrSelect = document.getElementById('qrSelect');
+    data.forEach(qr => {
+      qrSelect.innerHTML += `<option value="${qr.id}" data-img="${qr.qrImage}">${qr.qrName}</option>`;
+    });
+  })
+  .catch(err => {
+    console.error('Failed to load QR codes:', err);
+  });
+
+document.getElementById('qrSelect').addEventListener('change', function () {
+  const selectedOption = this.selectedOptions[0];
+  const imgUrl = selectedOption ? selectedOption.getAttribute('data-img') : '';
+
+  const previewContainer = document.getElementById('qrImagePreviewContainer');
+  previewContainer.innerHTML = ''; 
+  if (imgUrl) {
+    const img = document.createElement('img');
+    img.src = imgUrl;
+    img.width = 120;
+    img.alt = 'Selected QR Code';
+    img.className = 'rounded border';
+    previewContainer.appendChild(img);
+  }
+});
+
+// Show QR preview when uploading an image
+document.getElementById('qrUpload').addEventListener('change', function () {
+  const previewContainer = document.getElementById('qrImagePreviewContainer');
+  previewContainer.innerHTML = '';
+  if (this.files && this.files[0]) {
+    const file = this.files[0];
+    const img = document.createElement('img');
+    img.width = 120;
+    img.alt = 'Uploaded QR Code';
+    img.className = 'rounded border';
+    previewContainer.appendChild(img);
+
+    const reader = new FileReader();
+    reader.onload = e => img.src = e.target.result;
+    reader.readAsDataURL(file);
+  }
+});
+
+// Checkout
+async function checkout() {
+  const name = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+
+  if (!name || !phone || cart.length === 0) {
+    alert("Please fill in your name, phone, and add items to cart.");
+    return;
+  }
+
+  const totalAmount = subtotal - discount;
+
+  const formData = new FormData();
+  formData.append('customerName', name);
+  formData.append('customerPhone', phone);
+  formData.append('totalAmount', totalAmount);
+
+  // Add QR Code - either uploaded or selected
+  const qrUpload = document.getElementById('qrUpload');
+  const qrSelect = document.getElementById('qrSelect');
+
+  if (qrUpload.files.length > 0) {
+    formData.append('QRCodeInvoice', qrUpload.files[0]);
+  } else if (qrSelect.value && qrSelect.value !== "Select QR") {
+    formData.append('QRCodeInvoice', qrSelect.value);
+  } else {
+    alert("Please select or upload a QR code.");
+    return;
+  }
+
+  formData.append('items', JSON.stringify(cart.map(item => ({
+    productName: item.name,
+    price: item.price,
+    qty: item.quantity
+  }))));
+
+  try {
+    const response = await fetch('/orders/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: formData
+    });
+
+    if (!response.ok) throw new Error("Server error: " + response.status);
+
+    const order = await response.json();
+
+    alert("✅ Order placed successfully!");
+    renderInvoice(order);
+    cart = [];
+    renderCart();
+    loadOrderHistory();
+
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerPhone').value = '';
+    document.getElementById('qrUpload').value = '';
+    document.getElementById('qrSelect').selectedIndex = 0;
+    document.getElementById('qrImagePreviewContainer').innerHTML = '';
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Invoice Display
+let currentOrderForPrint = null;
+
+function renderInvoice(order) {
+  currentOrderForPrint = order; 
+  const container = document.getElementById('invoiceContent');
+  const totalAmount = Number(order.totalAmount) || 0;
+
+  // Prepare QR code HTML conditionally
+  const qrHtml = order.QRCodeInvoice
+    ? `<p><strong>Payment QR:</strong><br><img src="${order.QRCodeInvoice}" width="120" alt="QR Code"></p>`
+    : `<p><em>No QR code available.</em></p>`;
+
+  // Prepare items HTML table
+  let itemsHtml = `
+    <table class="table table-bordered w-full text-left">
+      <thead>
+        <tr>
+          <th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+  order.items.forEach(i => {
+    const qty = i.quantity ?? i.qty; 
+    const price = Number(i.price);
+    const subtotal = qty * price;
+    itemsHtml += `
+      <tr>
+        <td>${i.productName}</td>
+        <td>${qty}</td>
+        <td>$${price.toFixed(2)}</td>
+        <td>$${subtotal.toFixed(2)}</td>
+      </tr>
+    `;
+  });
+
+  itemsHtml += `
+      </tbody>
+    </table>
+  `;
+
+  // Compose full invoice HTML
+  container.innerHTML = `
+    <div class="space-y-4 font-sans text-gray-800">
+      <p><strong>Order ID:</strong> ${order.id}</p>
+      <p><strong>Customer:</strong> ${order.customerName}</p>
+      <p><strong>Phone:</strong> ${order.customerPhone}</p>
+      ${qrHtml}
+      <p><strong>Total:</strong> $${totalAmount.toFixed(2)}</p>
+      <hr class="my-2" />
+      
+      <h3 class="font-bold text-lg">🛒 Items:</h3>
+      ${itemsHtml}
+    </div>
+  `;
+
+  showInvoice();
+}
+
+function showInvoice() {
+  document.getElementById('invoiceModal').classList.remove('hidden');
+}
+
+function hideInvoice() {
+  document.getElementById('invoiceModal').classList.add('hidden');
+}
+
+// Order History
+async function loadOrderHistory() {
+  try {
+    const response = await fetch('/orders/');
+    if (!response.ok) throw new Error("Failed to load order history");
+    const orders = await response.json();
+
+    const container = document.getElementById('orderHistoryContent');
+    container.innerHTML = '';
+
+    if (orders.length === 0) {
+      container.innerHTML = `<p class="text-gray-500">No orders found.</p>`;
+      return;
+    }
+
+    orders.forEach(order => {
+      const orderElem = document.createElement('div');
+      orderElem.className = "border p-3 rounded shadow-sm bg-white";
+
+      // display items inside the order
+      let itemsHTML = order.items.map(item => `
+        <div class="flex justify-between">
+          <span>${item.productName}</span>
+          <span>${item.quantity} × $${parseFloat(item.price).toFixed(2)}</span>
+        </div>
+      `).join('');
+
+      orderElem.innerHTML = `
+        <p><strong>Order ID:</strong> ${order.id}</p>
+        <p><strong>Name:</strong> ${order.customerName}</p>
+        <p><strong>Phone:</strong> ${order.customerPhone}</p>
+        <p><strong>Total:</strong> $${parseFloat(order.totalAmount).toFixed(2)}</p>
+        <div class="mt-2">${itemsHTML}</div>
+        <button class="mt-3 px-3 py-1 bg-pink-600 text-white rounded" onclick='renderInvoice(${JSON.stringify(order).replace(/'/g, "\\'")})'>View Invoice</button>
+      `;
+
+      container.appendChild(orderElem);
+    });
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('orderHistoryContent').innerHTML = `<p class="text-red-500">Error loading orders.</p>`;
+  }
+}
+
+function showOrderHistory() {
+  const container = document.getElementById('orderHistoryContainer');
+  if (container) {
+    container.classList.remove('hidden');
+    loadOrderHistory();
+  }
+}
+
+function hideOrderHistory() {
+  const container = document.getElementById('orderHistoryContainer');
+  if (container) {
+    container.classList.add('hidden');
+  }
+}
+
+function printInvoice() {
+  if (!currentOrderForPrint) {
+    alert("No invoice to print!");
+    return;
+  }
+
+  const order = currentOrderForPrint;
+
+  // Format order date nicely or fallback to today
+  let orderDateRaw = order.orderDate || order.orderDateString || new Date().toISOString();
+  const orderDate = new Date(orderDateRaw);
+  const formattedDate = orderDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+
+  const qrHtml = order.QRCodeInvoice
+    ? `<img src="${order.QRCodeInvoice}" alt="QR Code" width="120" style="border:1px solid #ccc; border-radius:4px;">`
+    : `<em>No QR code available.</em>`;
+
+  // Build items rows
+  let itemsRows = '';
+  order.items.forEach(item => {
+    const qty = item.quantity ?? item.qty;
+    const price = Number(item.price);
+    const subtotal = qty * price;
+    itemsRows += `
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">${item.productName}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${qty}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${price.toFixed(2)}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${subtotal.toFixed(2)}</td>
+      </tr>
+    `;
+  });
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto;">
+      <h2 style="text-align: center; margin-bottom: 24px;">Order Date: ${formattedDate}</h2>
+
+      <table style="width: 100%; border-collapse: collapse; text-align: left; margin-bottom: 30px;">
+        <thead>
+          <tr style="background-color: #f3f3f3;">
+            <th style="padding: 12px; border: 1px solid #ddd;">Customer Name</th>
+            <th style="padding: 12px; border: 1px solid #ddd;">Phone</th>
+            <th style="padding: 12px; border: 1px solid #ddd;">Payment QR</th>
+            <th style="padding: 12px; border: 1px solid #ddd;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 12px; border: 1px solid #ddd;">${order.customerName}</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">${order.customerPhone}</td>
+            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${qrHtml}</td>
+            <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;">$${Number(order.totalAmount).toFixed(2)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-bottom: 10px;">🛒 Items</h3>
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="background-color: #f3f3f3;">
+            <th style="padding: 10px; border: 1px solid #ddd;">Product</th>
+            <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Qty</th>
+            <th style="padding: 10px; border: 1px solid #ddd; text-align: right;">Price</th>
+            <th style="padding: 10px; border: 1px solid #ddd; text-align: right;">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsRows}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write('<html><head><title>Invoice</title></head><body>');
+  printWindow.document.write(html);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+  printWindow.close();
+}
+
+// Initial render on page load
+renderCart();
+
+  </script>
+</body>
+
+</html>

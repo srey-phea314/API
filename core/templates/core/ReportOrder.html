@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🧾Report Order</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/order.css' %}" />
+</head>
+<body>
+  <div class="container">
+    <h3>🧾Report Order</h3>
+    <button class="print-btn" onclick="window.print()">🖨️ Print Report</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Phone</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>QR</th>
+          <th>Items</th>
+        </tr>
+      </thead>
+      <tbody id="orderReportBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    function fetchAllOrders() {
+      fetch('/orders/')
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.getElementById('orderReportBody');
+          tbody.innerHTML = '';
+
+          data.forEach(order => {
+            const filteredItems = order.items.filter(item => {
+              const qty = Number(item.qty ?? item.quantity ?? 0);
+              return qty > 0;
+            });
+
+            const itemList = filteredItems.map(item => {
+              const name = item.productName || 'Unnamed';
+              const qty = Number(item.qty ?? item.quantity ?? 0);
+              const price = Number(item.price) || 0;
+              const subtotal = (qty * price).toFixed(2);
+              return `<li>${name} - ${qty} x $${price.toFixed(2)} = $${subtotal}</li>`;
+            }).join('');
+
+            tbody.innerHTML += `
+              <tr>
+                <td>#${order.id}</td>
+                <td>${order.customerName || ''}</td>
+                <td>${order.customerPhone || ''}</td>
+                <td>${new Date(order.orderDate).toLocaleString()}</td>
+                <td>$${parseFloat(order.totalAmount || 0).toFixed(2)}</td>
+                <td>${order.QRCodeInvoice ? `<img src="${order.QRCodeInvoice}" alt="QR Code">` : '—'}</td>
+                <td><ul>${itemList || '<li><em>No items ordered</em></li>'}</ul></td>
+              </tr>
+            `;
+          });
+        })
+        .catch(err => {
+          document.getElementById('orderReportBody').innerHTML = `
+            <tr><td colspan="7" class="text-danger">⚠️ Cannot load orders: ${err}</td></tr>
+          `;
+        });
+    }
+
+    fetchAllOrders();
+  </script>
+</body>
+</html>

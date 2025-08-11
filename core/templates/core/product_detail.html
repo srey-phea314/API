@@ -1,0 +1,393 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ product.name }} - Past&Now</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .btn-add-to-cart {
+            background-color: rgb(223 64 91);
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add-to-cart:hover,
+        .btn-add-to-cart:focus {
+            background-color: rgb(180 40 65);
+            outline: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Top Bar -->
+    <div class="bg-pink-600 py-2 border-b border-pink-700">
+        <div
+            class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4 text-white text-sm space-y-2 sm:space-y-0">
+            <div class="flex flex-wrap justify-center sm:justify-start gap-4">
+                <span>📞 Customer Service</span>
+                <span>🚚 Free Shipping</span>
+                <span>💸 Save 60% Off</span>
+            </div>
+            <div class="flex justify-center sm:justify-end gap-4">
+                <span>💬 Live Chat</span>
+                <span>❤️</span>
+                <span>🛒</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header bg-white shadow">
+        <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold text-pink-600 mb-4 sm:mb-0">Past&Now</h1>
+
+            <nav aria-label="Primary"
+                class="flex flex-wrap justify-center space-x-4 sm:space-x-6 text-gray-700 mb-4 sm:mb-0">
+                <a href="{% url 'index' %}#home" class="hover:text-pink-600 transition duration-200">Home</a>
+                <a href="{% url 'index' %}#shop" class="hover:text-pink-600 transition duration-200">Shop</a>
+                <a href="{% url 'index' %}#blog" class="hover:text-pink-600 transition duration-200">Blog</a>
+                <a href="{% url 'contact' %}"
+                    class="hover:text-pink-600 transition duration-200 font-semibold">Contact</a>
+            </nav>
+
+            <div class="relative">
+                <a href="{% url 'cart' %}" id="cart-icon" aria-label="View cart"
+                    class="relative inline-block text-2xl cursor-pointer text-gray-800 hover:text-pink-600 transition">
+                    🛒
+                    <span id="cart-count"
+                        class="absolute -top-2 -right-3 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"
+                        style="display:none;">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+        <section>
+            <div>
+                {% for image in product.gallery_images.all %}
+                <img src="{{ image.image.url }}" alt="{{ image.alt_text }}" class="w-full h-auto object-cover" />
+                {% empty %}
+                <p>No gallery images found.</p>
+                {% endfor %}
+            </div>
+            <div
+                class="flex flex-wrap gap-3 mt-4 justify-center md:justify-start max-w-md mx-auto md:mx-0 overflow-x-auto scrollbar-hide">
+                {% for img in product.gallery_images.all %}
+                {% endfor %}
+            </div>
+        </section>
+        <section class="product-card" style="width: 600px;;">
+            <p class="text-sm text-pink-700">{{ product.productID.category }}</p>
+            <h2 style="font-size: 28px;color:rgb(213, 71, 95);font-weight: bold;margin-right: 440px;">{{ product.name }}
+            </h2>
+            <div class="flex items-center gap-2 text-sm text-gray-600 mt-2">
+                <div class="text-orange-400 text-lg" aria-label="Rating">
+                    {% for i in "12345" %}
+                    {% if forloop.counter <= product.rating %}&#9733;{% else %}&#9734;{% endif %} {% endfor %} </div>
+                        <span id="review-count" class="ml-2">(0 Reviews)</span>
+                        {% if product.available %}
+                        <span class="ml-4 px-2 py-0.5 bg-pink-100 text-pink-600 rounded text-xs">In Stock</span>
+                        {% endif %}
+                </div>
+
+                <div class="flex items-center gap-4 mt-4">
+                    <p class="text-2xl font-bold text-pink-600 price">${{ product.price }}</p>
+                    {% if product.original_price %}
+                    <p class="line-through text-gray-400">${{ product.original_price }}</p>
+                    {% endif %}
+                </div>
+
+                <p class="mt-4 text-gray-700">{{ product.description }}</p>
+
+                <!-- Size / Color -->
+                <div class="mt-6">
+                    <h3 class="font-semibold text-gray-800 mb-2">Size / Color</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for size in size_options %}
+                        {% if size.is_color and size.color_hex %}
+                        <button title="{{ size.size_label }}"
+                            class="w-10 h-10 rounded-full border border-gray-300 hover:ring-2 hover:ring-pink-400 transition"
+                            aria-label="{{ size.size_label }}">
+                        </button>
+                        {% else %}
+                        <button
+                            class="px-6 py-2 min-w-[80px] border border-gray-300 rounded-full hover:bg-pink-50 hover:border-pink-400 transition">
+                            {{ size.size_label }}
+                        </button>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <!-- Quantity and Add to Cart -->
+                <div class="mt-6 flex items-center gap-4 flex-wrap">
+                    <div class="flex items-center border border-pink-400 rounded overflow-hidden">
+                        <button type="button" aria-label="Decrease quantity"
+                            class="px-3 py-2 bg-pink-100 hover:bg-pink-200 text-pink-600 text-lg font-bold"
+                            id="btn-decrease-qty">−</button>
+                        <input id="quantity" type="number" min="1" value="1"
+                            class="w-14 text-center border-l border-r border-pink-300 focus:outline-none"
+                            aria-live="polite" />
+                        <button type="button" aria-label="Increase quantity"
+                            class="px-3 py-2 bg-pink-100 hover:bg-pink-200 text-pink-600 text-lg font-bold"
+                            id="btn-increase-qty">+</button>
+                    </div>
+
+                    <button class="btn-add-to-cart cart-btn" title="Add to Cart" aria-label="Add to Cart"
+                        data-product-id="{{ product.id }}">Add to Cart</button>
+                </div>
+
+                <!-- Contact, Tags & Share -->
+                <div style="margin-left: 6px; margin-top: 14px;">
+                    <div class="flex items-center mb-4 mt-8 ml-2">
+                        <span class="font-semibold w-24">📞 Contact:</span>
+                        <a href="tel:012345678" class="text-pink-600 hover:underline">012345678</a>
+                    </div>
+
+                    <div class="flex items-center mb-4">
+                        <span class="font-semibold w-24">🏷️ Tags:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 text-xs font-medium bg-pink-100 text-pink-600 rounded-full">Skincare</span>
+                            <span
+                                class="px-3 py-1 text-xs font-medium bg-yellow-100 text-yellow-600 rounded-full">Serum</span>
+                            <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-600 rounded-full">Vitamin
+                                C</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <span class="font-semibold w-24">🔗 Share:</span>
+                        <div class="flex items-center gap-3 text-lg">
+                            <a href="#" class="text-blue-600 hover:text-blue-800" aria-label="Facebook"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-green-500 hover:text-green-700" aria-label="WhatsApp"><i
+                                    class="fab fa-whatsapp"></i></a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600" aria-label="Twitter"><i
+                                    class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+        </section>
+    </main>
+
+    <!-- Tabs -->
+    <section class="max-w-7xl mx-auto px-6 mt-10">
+        <div class="flex border-b border-pink-200 space-x-6 justify-center" role="tablist">
+            <button class="tab-btn py-3 text-pink-600 border-b-2 border-pink-600 font-semibold" role="tab"
+                aria-selected="true" aria-controls="tab-desc" id="tab-btn-desc">Description</button>
+            <button class="tab-btn py-3 text-gray-500 hover:text-pink-600" role="tab" aria-selected="false"
+                aria-controls="tab-info" id="tab-btn-info">Additional Information</button>
+            <button class="tab-btn py-3 text-gray-500 hover:text-pink-600" role="tab" aria-selected="false"
+                aria-controls="tab-reviews" id="tab-btn-reviews">Reviews</button>
+        </div>
+
+        <div class="tab-content mt-6 space-y-8" tabindex="0">
+            <article id="tab-desc" role="tabpanel" aria-labelledby="tab-btn-desc">
+                <h2 class="text-lg font-bold mb-2">Description</h2>
+                <p class="text-gray-700 leading-relaxed">{{ product.description }}</p>
+            </article>
+
+            <article id="tab-info" role="tabpanel" aria-labelledby="tab-btn-info" class="hidden">
+                <h2 class="text-lg font-bold mb-4">Additional Information</h2>
+                {% for detail in details %}
+                <div class="overflow-x-auto rounded-lg border border-pink-200 shadow-sm bg-pink-50">
+                    <table class="min-w-full text-sm text-gray-700">
+                        <thead>
+                            <tr class="bg-pink-100">
+                                <th class="py-3 px-4 text-left font-bold text-pink-700">Attribute</th>
+                                <th class="py-3 px-4 text-left font-bold text-pink-700">Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-pink-100">
+                                <td class="py-3 px-4 font-semibold bg-white">Skin Type</td>
+                                <td class="py-3 px-4 bg-white">{{ detail.skin_type }}</td>
+                            </tr>
+                            <tr class="border-b border-pink-100">
+                                <td class="py-3 px-4 font-semibold bg-white">Shelf Life</td>
+                                <td class="py-3 px-4 bg-white">{{ detail.shelf_life }}</td>
+                            </tr>
+                            <tr class="border-b border-pink-100">
+                                <td class="py-3 px-4 font-semibold bg-white">Application Time</td>
+                                <td class="py-3 px-4 bg-white">{{ detail.application_time }}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-semibold bg-white">Packaging</td>
+                                <td class="py-3 px-4 bg-white">{{ detail.packaging }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </article>
+
+            <article id="tab-reviews" role="tabpanel" aria-labelledby="tab-btn-reviews" class="hidden">
+                <div class="overflow-x-auto rounded-lg border border-pink-200 shadow-sm bg-pink-50 mt-6">
+                    <table class="min-w-full text-sm text-gray-700">
+                        <thead>
+                            <tr class="bg-pink-100">
+                                <th class="py-3 px-4 text-left font-bold text-pink-700">Reviews</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detail in details %}
+                            <tr class="border-b border-pink-100">
+                                <td class="py-3 px-4 bg-white leading-relaxed">
+                                    {{ detail.Reviews|safe }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </div>
+    </section>
+
+   {% include "core/footer.html" %}
+
+    <!-- Cart Details Popup -->
+    <div id="cart-details"
+        class="hidden fixed top-16 right-5 bg-white border border-gray-300 p-4 w-72 max-h-96 overflow-y-auto shadow-lg z-50 rounded">
+        <h3 class="font-semibold mb-2">Cart Items</h3>
+        <ul id="cart-items" class="list-disc list-inside text-sm text-gray-700"></ul>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            const cartCountSpan = document.getElementById("cart-count");
+            const cartDetails = document.getElementById("cart-details");
+            const cartItemsList = document.getElementById("cart-items");
+
+            function updateCartDisplay() {
+                let totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+                if (totalQuantity > 0) {
+                    cartCountSpan.textContent = totalQuantity;
+                    cartCountSpan.style.display = "flex";
+                } else {
+                    cartCountSpan.style.display = "none";
+                }
+            }
+
+            function renderCartItems() {
+                cartItemsList.innerHTML = "";
+                if (cart.length === 0) {
+                    cartItemsList.innerHTML = "<li>Your cart is empty.</li>";
+                } else {
+                    cart.forEach(item => {
+                        const li = document.createElement("li");
+                        li.textContent = `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`;
+                        cartItemsList.appendChild(li);
+                    });
+                }
+            }
+
+            // Add to Cart button(s)
+            document.querySelectorAll(".cart-btn").forEach(button => {
+                button.addEventListener("click", () => {
+                    const productId = button.dataset.productId;
+                    const productCard = button.closest(".product-card");
+                    const name = productCard.querySelector("h2, h4").textContent;
+                    const priceText = productCard.querySelector(".price").textContent;
+                    const price = parseFloat(priceText.replace("$", ""));
+                    const quantityInput = productCard.querySelector("#quantity");
+                    const quantity = quantityInput ? Math.max(1, parseInt(quantityInput.value)) : 1;
+
+                    const existing = cart.find(item => item.id === productId);
+                    if (existing) {
+                        existing.quantity += quantity;
+                    } else {
+                        cart.push({ id: productId, name, price, quantity });
+                    }
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    updateCartDisplay();
+                    alert(`Added ${quantity} item(s) of "${name}" to cart.`);
+                });
+            });
+
+            updateCartDisplay();
+
+            // Cart icon click toggle
+            document.getElementById("cart-icon").addEventListener("click", () => {
+                renderCartItems();
+                cartDetails.classList.toggle("hidden");
+            });
+
+            // Image gallery thumbnail switching
+            const mainImage = document.getElementById("main-product-image");
+            const thumbnails = document.querySelectorAll('section:first-child .flex.flex-wrap img');
+
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    mainImage.src = thumb.src;
+                    mainImage.alt = thumb.alt;
+                    thumbnails.forEach(t => t.classList.remove('ring-2', 'ring-pink-500'));
+                    thumb.classList.add('ring-2', 'ring-pink-500');
+                });
+                thumb.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        thumb.click();
+                    }
+                });
+            });
+
+            // Tabs functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content > article');
+
+            tabButtons.forEach((btn, i) => {
+                btn.addEventListener('click', () => {
+                    tabButtons.forEach((b, idx) => {
+                        b.classList.toggle('text-pink-600', idx === i);
+                        b.classList.toggle('border-pink-600', idx === i);
+                        b.classList.toggle('font-semibold', idx === i);
+                        b.classList.toggle('text-gray-500', idx !== i);
+                        b.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+                    });
+                    tabContents.forEach((c, idx) => {
+                        c.classList.toggle('hidden', idx !== i);
+                    });
+                });
+            });
+
+            // Quantity buttons
+            const qtyInput = document.getElementById('quantity');
+            const btnDec = document.getElementById('btn-decrease-qty');
+            const btnInc = document.getElementById('btn-increase-qty');
+
+            btnDec.addEventListener('click', () => {
+                if (qtyInput.value > 1) qtyInput.value = parseInt(qtyInput.value) - 1;
+            });
+            btnInc.addEventListener('click', () => {
+                qtyInput.value = parseInt(qtyInput.value) + 1;
+            });
+
+            qtyInput.addEventListener('input', () => {
+                if (qtyInput.value < 1 || isNaN(qtyInput.value)) qtyInput.value = 1;
+            });
+        });
+    </script>
+</body>
+
+</html>

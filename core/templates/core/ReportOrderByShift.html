@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🧾 Cute Pink Order Report with Delete</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+    body {
+      background: #ffe6f0;
+      color: #b74182;
+      font-family: 'Quicksand', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 2rem;
+    }
+
+    h3 {
+      color: #d65d9a;
+      font-weight: 900;
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      text-shadow: 2px 2px 6px #f8bbd0;
+      letter-spacing: 2px;
+      position: relative;
+      user-select: none;
+      cursor: default;
+      animation: bounceEmoji 2.5s ease-in-out infinite;
+    }
+    h3::before {
+      content: "✨ ";
+      font-size: 2.4rem;
+      position: absolute;
+      left: -1.5rem;
+      top: 0;
+      animation: sparkle 3s linear infinite;
+    }
+    h3::after {
+      content: " ✨";
+      font-size: 2.4rem;
+      position: absolute;
+      right: -1.5rem;
+      top: 0;
+      animation: sparkle 3s linear infinite 1.5s;
+    }
+    @keyframes bounceEmoji {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: rotate(0deg) scale(1); }
+      50% { opacity: 0.6; transform: rotate(20deg) scale(1.2); }
+    }
+
+    .print-btn {
+      float: right;
+      background: #f48fb1;
+      border: none;
+      color: white;
+      font-weight: 600;
+      border-radius: 30px;
+      padding: 10px 28px;
+      box-shadow: 0 6px 10px #f8bbd0;
+      transition: all 0.3s ease;
+    }
+    .print-btn:hover {
+      background: #ce3a7e;
+      box-shadow: 0 8px 14px #f48fb1;
+    }
+
+    /* Filter Section */
+    label {
+      font-weight: 600;
+      color: #ad3d7b;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+      letter-spacing: 0.7px;
+    }
+    input[type="date"],
+    select.form-select {
+      border: 2px solid #f8bbd0;
+      border-radius: 30px;
+      padding: 8px 15px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      box-shadow: inset 2px 2px 6px #f2a9c7;
+    }
+    input[type="date"]:focus,
+    select.form-select:focus {
+      border-color: #ce3a7e;
+      outline: none;
+      box-shadow: 0 0 8px #f48fb1;
+      background: #fff0f8;
+    }
+    .btn-success {
+      background: #f48fb1;
+      border: none;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 10px #f8bbd0;
+      transition: all 0.3s ease;
+    }
+    .btn-success:hover {
+      background: #ce3a7e;
+      box-shadow: 0 8px 14px #f48fb1;
+    }
+
+    /* Table Styles */
+    table.table {
+      background: #fff0f8;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px #f8bbd0;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    thead.table-light {
+      background-color: #f9c0db;
+      color: #9f2e65;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    tbody tr {
+      transition: background-color 0.3s ease;
+      cursor: default;
+    }
+    tbody tr:hover {
+      background-color: #ffd6e8;
+    }
+    tbody td {
+      vertical-align: middle;
+      color: #7a2a5c;
+      font-weight: 600;
+      padding: 12px 15px;
+    }
+    tbody ul {
+      padding-left: 1.2rem;
+      margin-bottom: 0;
+      color: #b74282;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    tbody ul li {
+      margin-bottom: 0.3rem;
+    }
+    img {
+      border-radius: 12px;
+      border: 2px solid #f8bbd0;
+      box-shadow: 0 0 8px #f48fb1;
+      transition: transform 0.3s ease;
+    }
+    img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Delete button */
+    .btn-delete {
+      background: #f67994;
+      border: none;
+      color: white;
+      font-weight: 700;
+      border-radius: 25px;
+      padding: 6px 12px;
+      box-shadow: 0 4px 8px #f8bbd0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 0.9rem;
+    }
+    .btn-delete:hover {
+      background: #e35f7c;
+      box-shadow: 0 6px 12px #f48fb1;
+    }
+
+    /* Modal styles */
+    #confirmModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1050;
+    }
+    #confirmModal.active {
+      display: flex;
+    }
+    #confirmModal .modal-content {
+      background: #fff0f8;
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 12px 30px #f8bbd0;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      color: #9f2e65;
+      font-weight: 600;
+      font-size: 1.2rem;
+      font-family: 'Quicksand', sans-serif;
+    }
+    #confirmModal .modal-buttons {
+      margin-top: 1.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    #confirmModal button {
+      border-radius: 30px;
+      padding: 10px 28px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 6px 10px #f8bbd0;
+      transition: all 0.3s ease;
+      font-family: 'Quicksand', sans-serif;
+    }
+    #confirmModal .btn-cancel {
+      background: #f4cccc;
+      color: #9f2e65;
+    }
+    #confirmModal .btn-cancel:hover {
+      background: #e8a2b2;
+    }
+    #confirmModal .btn-confirm {
+      background: #e35f7c;
+      color: white;
+    }
+    #confirmModal .btn-confirm:hover {
+      background: #b23b59;
+      box-shadow: 0 8px 14px #f48fb1;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 767px) {
+      .print-btn {
+        float: none;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      .row.my-4 > div {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-4">
+    <h3>🧾 Order Report By shief</h3>
+    <button class="btn print-btn" onclick="window.print()">🖨️ Print Report</button>
+
+    <div class="row my-4">
+      <div class="col-md-3">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" class="form-control" />
+      </div>
+      <div class="col-md-3">
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" class="form-control" />
+      </div>
+      <div class="col-md-3">
+        <label for="timeRange">Time of Day</label>
+        <select id="timeRange" class="form-select">
+          <option value="">All</option>
+          <option value="morning">Morning (00:00-11:59)</option>
+          <option value="afternoon">Afternoon (12:00-17:59)</option>
+          <option value="evening">Evening (18:00-23:59)</option>
+        </select>
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+        <button onclick="fetchAllOrders()" class="btn btn-success w-100">🔍 Filter</button>
+      </div>
+    </div>
+
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Phone</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>QR</th>
+          <th>Items</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="orderReportBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <div class="modal-content">
+      <div id="modalTitle">Confirm Deletion</div>
+      <div id="modalDesc" style="margin-top: 1rem;">
+        Are you sure you want to <strong>delete this order</strong>? This action cannot be undone.
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-confirm" onclick="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let ordersData = [];
+    let orderToDeleteId = null;
+
+    function fetchAllOrders() {
+      fetch('/orders/')
+        .then(res => res.json())
+        .then(data => {
+          ordersData = data;
+          renderOrders(data);
+        })
+        .catch(err => {
+          document.getElementById('orderReportBody').innerHTML = `
+            <tr><td colspan="8" class="text-danger">⚠️ Cannot load orders: ${err}</td></tr>
+          `;
+        });
+    }
+function renderOrders(data) {
+  const start = document.getElementById('startDate').value;
+  const end = document.getElementById('endDate').value;
+  const range = document.getElementById('timeRange').value;
+
+  const tbody = document.getElementById('orderReportBody');
+  tbody.innerHTML = '';
+
+  data.forEach(order => {
+    const orderDate = new Date(order.orderDate);
+
+    // Filter by date
+    const orderDateOnly = orderDate.toISOString().split('T')[0];
+    if (start && orderDateOnly < start) return;
+    if (end && orderDateOnly > end) return;
+
+    // Filter by time range
+    const hour = orderDate.getHours();
+    if (range === 'morning' && (hour < 0 || hour >= 12)) return;
+    if (range === 'afternoon' && (hour < 12 || hour >= 18)) return;
+    if (range === 'evening' && (hour < 18 || hour >= 24)) return;
+
+    // Filter items where qty or quantity > 0
+    const filteredItems = (order.items || []).filter(item => {
+      const qty = Number(item.qty ?? item.quantity ?? 0);
+      return qty > 0;
+    });
+
+    // Generate item list HTML
+    const itemList = filteredItems.map(item => {
+      const name = item.productName || item.name || 'Unnamed';
+      const qty = Number(item.qty ?? item.quantity ?? 0);
+      const price = Number(item.price) || 0;
+      const subtotal = (qty * price).toFixed(2);
+      return `<li>${name} - ${qty} x $${price.toFixed(2)} = $${subtotal}</li>`;
+    }).join('');
+
+    tbody.innerHTML += `
+      <tr id="order-row-${order.id}">
+        <td>#${order.id}</td>
+        <td>${order.customerName}</td>
+        <td>${order.customerPhone}</td>
+        <td>${orderDate.toLocaleString()}</td>
+        <td>$${parseFloat(order.totalAmount).toFixed(2)}</td>
+        <td>${order.QRCodeInvoice ? `<img src="${order.QRCodeInvoice}" width="60" alt="QR Code">` : '—'}</td>
+        <td><ul class="mb-0">${itemList}</ul></td>
+        <td>
+          <button class="btn-delete" onclick="openDeleteModal(${order.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+
+    // Modal control
+    function openDeleteModal(orderId) {
+      orderToDeleteId = orderId;
+      document.getElementById('confirmModal').classList.add('active');
+    }
+
+    function closeModal() {
+      orderToDeleteId = null;
+      document.getElementById('confirmModal').classList.remove('active');
+    }
+
+    function confirmDelete() {
+      if (!orderToDeleteId) return;
+
+      fetch(`/orders/${orderToDeleteId}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to delete order');
+        // Remove from UI
+        const row = document.getElementById(`order-row-${orderToDeleteId}`);
+        if (row) row.remove();
+
+        closeModal();
+        showSuccessMessage('Order deleted successfully!');
+      })
+      .catch(err => {
+        closeModal();
+        alert(`Could not delete order: ${err.message}`);
+      });
+    }
+
+    function showSuccessMessage(msg) {
+      const div = document.createElement('div');
+      div.textContent = msg;
+      div.style.position = 'fixed';
+      div.style.top = '20px';
+      div.style.right = '20px';
+      div.style.background = '#f48fb1';
+      div.style.color = 'white';
+      div.style.padding = '10px 20px';
+      div.style.borderRadius = '30px';
+      div.style.boxShadow = '0 6px 12px #f8bbd0';
+      div.style.fontWeight = '700';
+      div.style.fontFamily = "'Quicksand', sans-serif";
+      div.style.zIndex = '1100';
+      div.style.opacity = '1';
+      div.style.transition = 'opacity 0.5s ease';
+
+      document.body.appendChild(div);
+
+      setTimeout(() => {
+        div.style.opacity = '0';
+        setTimeout(() => div.remove(), 500);
+      }, 2500);
+    }
+
+    // Load all on first load
+    fetchAllOrders();
+  </script>
+</body>
+</html>

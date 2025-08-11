@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ blog.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdfaf6;
+     
+    }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .blog-container {
+      max-width: 1200px;
+      width: 100%;
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 6px 18px rgba(61, 43, 31, 0.1);
+    }
+
+    .blog-content {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+    }
+
+    .blog-content img {
+      width: 450px;
+      box-shadow:4px 8px rgb(182, 60, 80);
+      height: 550px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(61, 43, 31, 0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .blog-content img:hover {
+      transform: scale(1.015);
+    }
+
+    .blog-text {
+      margin-left: 17px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .prose{
+      color:#030302;
+    }
+    .blog-text h1 {
+      font-size: 2.2rem;
+      color: rgb(195, 73, 93);
+      margin: 0 0 12px;
+      font-weight: 700;
+    }
+
+    .blog-text p {
+      margin: 0 0 16px;
+      color: #000000;
+      font-size: 0.95rem;
+    }
+    .back-link {
+      width: fit-content;
+      padding: 12px 20px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fddde0;
+      color: #a76f23;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .back-link:hover {
+      background-color: #a76f23;
+      color: #fff;
+      border-color: #a76f23;
+    }
+
+    @media (max-width: 900px) {
+      .blog-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .blog-content img {
+        width: 100%;
+        max-height: 280px;
+        object-fit: cover;
+      }
+
+      .blog-text h1 {
+        font-size: 1.75rem;
+      }
+
+      .prose {
+        font-size: 1rem;
+        margin-bottom: 24px;
+      }
+
+      .back-link {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="blog-container">
+      <div class="blog-content">
+        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" />
+        <div class="blog-text">
+          <h1>{{ blog.title }}</h1>
+          <p>Posted on {{ blog.created_at|date:"F d, Y" }}</p>
+          <div class="prose" style="color:black;">
+            {{ blog.description|linebreaks }}
+          </div>
+          <a href="{% url 'index' %}#blog" class="back-link">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Past&Now Shop</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+
+<body>
+   <body class="bg-gray-100 text-gray-800">
+  <!-- Top Bar -->
+  <div class="bg-pink border-b text-sm" style="background-color: #b61852;padding: 15px;">
+    <div class="container mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div class="flex flex-wrap space-x-4 items-center text-white text-center sm:text-left">
+        <span class="flex items-center gap-1">📞 Customer Service</span>
+        <span class="hidden sm:flex items-center gap-1">🚚 Free Shipping</span>
+        <span class="hidden sm:flex items-center gap-1">💸 Save 60% Off</span>
+      </div>
+      <div class="flex space-x-4 items-center text-white">
+        <span class="flex items-center gap-1">💬 Live Chat</span>
+        <span>❤️</span>
+        <span>🛒</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl sm:text-3xl font-bold text-pink-600">Past&Now</h1>
+
+      <nav class="hidden md:flex space-x-6 text-gray-700">
+        <a href="#home" class="hover:text-pink-600">Home</a>
+        <a href="#shop" class="hover:text-pink-600">Shop</a>
+        <a href="#blog" class="hover:text-pink-600">Blog</a>
+        <a href="{% url 'contact' %}" class="hover:text-pink-600">Contact</a>
+      </nav>
+
+      <!-- Right Side (Search + Buttons) -->
+      <div class="flex items-center space-x-4">
+        <!-- Mobile Toggle -->
+        <button id="menu-toggle" class="md:hidden focus:outline-none">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+
+        <!-- Desktop Search Box -->
+        <div class="relative hidden lg:block">
+          <input id="searchInput" type="text" placeholder="Search..." class="pl-10 pr-3 py-1 border rounded-md" />
+          <svg class="w-5 h-5 absolute left-2 top-1.5 text-gray-500" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+
+        <!-- Mobile Search Icon -->
+        <div class="lg:hidden">
+          <button id="mobile-search-btn" class="text-gray-700 text-xl">🔍</button>
+        </div>
+
+        <button id="register-btn"
+          class="text-sm px-3 py-1 border border-pink-700 text-white rounded-md"
+          style="background-color:#b61852;">
+          Sign up
+        </button>
+
+        <!-- Cart -->
+        <div class="relative">
+          <a href="{% url 'cart' %}" class="text-xl">🛒</a>
+          <span id="cart-count"
+            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Search Input -->
+    <div id="mobile-search-box" class="px-4 pb-2 hidden lg:hidden">
+      <input type="text" placeholder="Search..." class="w-full px-3 py-2 border rounded-md" />
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 space-y-2 text-gray-700">
+      <a href="#home" class="block">Home</a>
+      <a href="#shop" class="block">Shop</a>
+      <a href="#blog" class="block">Blog</a>
+      <a href="{% url 'contact' %}" class="block">Contact</a>
+    </div>
+  </header>
+    <!-- Hero Section -->
+    <section class="hero-section"
+      style="background-image: url('{{ hero.image.url }}'); background-size: cover; background-position: center; min-height: 500px;"
+      id="home">
+      <div class="hero-decor-left"></div>
+      <div class="hero-decor-right"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h2 class="hero-subtitle">Welcome to Past&amp;Now</h2>
+          <h1 class="hero-title">Discover the Beauty<br /> of our shop Cosmetics</h1>
+          <p class="hero-description">Explore our latest collections designed to highlight your natural glow.</p>
+          <a href="#" class="btn btn-primary">Shop Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content-area container">
+      <aside class="sidebar">
+        <h3 class="flex items-center justify-between md:cursor-default cursor-pointer" id="category-toggle">
+          Categories
+          <!-- Burger icon (mobile only) -->
+
+          <!-- Close icon (mobile only) -->
+          <svg id="close-icon" class="w-6 h-6 md:hidden hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </h3>
+
+        <!-- Category List -->
+        <ul id="category-list" class="hidden md:grid md:grid-cols-1 gap-3 mt-2">
+          <li><a href="{% url 'category_product' 'night cream' %}" class="block text-pink-700 hover:underline">Night
+              cream</a></li>
+          <li><a href="{% url 'category_product' 'Sunscreen' %}"
+              class="block text-pink-700 hover:underline">Sunscreen</a></li>
+          <li><a href="{% url 'category_product' 'Toners' %}" class="block text-pink-700 hover:underline">Toners</a>
+          </li>
+          <li><a href="{% url 'category_product' 'Eye-care' %}" class="block text-pink-700 hover:underline">Eye-care</a>
+          </li>
+          <li><a href="{% url 'category_product' 'foundation' %}"
+              class="block text-pink-700 hover:underline">Foundation</a></li>
+          <li><a href="{% url 'category_product' 'hair care' %}" class="block text-pink-700 hover:underline">Hair
+              care</a></li>
+          <li><a href="{% url 'category_product' 'cleanser' %}" class="block text-pink-700 hover:underline">Cleanser</a>
+          </li>
+          <li><a href="{% url 'category_product' 'lip care' %}" class="block text-pink-700 hover:underline">Lip care</a>
+          </li>
+          <li><a href="{% url 'category_product' 'Body care' %}" class="block text-pink-700 hover:underline">Body
+              care</a></li>
+        </ul>
+        <div class="mt-8">
+          <h3 class="text-lg font-semibold mb-4">Best Seller</h3>
+          <div class="flex overflow-x-auto space-x-4">
+            {% for product in best_sellers %}
+            <div class="min-w-[190px] bg-white border rounded-lg shadow-sm p-3 flex-shrink-0"
+              style="height:450px;width: 230px;">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                class="w-full h-40 object-cover rounded-md mb-2" />
+              <h4 class="text-base font-semibold">{{ product.name }}</h4>
+              <p class="text-pink-600 font-bold mb-1">${{ product.price }}</p>
+              <p class="text-sm text-gray-500 line-clamp-2 mb-2">{{ product.description }}</p>
+              <div class="text-yellow-400 text-sm mb-2">
+                {% for i in "12345" %}
+                {% if forloop.counter <= product.rating %}★{% else %}☆{% endif %} {% endfor %} </div>
+                  <a href="#"
+                    class="inline-block bg-pink-600 text-white px-3 py-1 rounded text-sm hover:bg-pink-700">Shop</a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+      </aside>
+
+      <main class="product-sections" id="shop">
+        <!-- Popular Products -->
+        <section class="product-grid-section px-6 py-4">
+          <h2 class="text-2xl font-bold mb-4">Popular Products</h2>
+
+          <div class="relative max-w-[1300px] mx-auto">
+            <button id="scrollLeftBtn"
+              class="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-2 z-10">
+              <i class="fa-solid fa-angle-left"></i>
+            </button>
+
+            <button id="scrollRightBtn"
+              class="absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-2 z-10">
+              <i class="fa-solid fa-angle-right"></i>
+            </button>
+            <div id="productScrollContainer" class="overflow-x-auto scroll-smooth whitespace-nowrap relative"
+              style="width: 1000px;">
+              <div class="inline-flex gap-4">
+                {% for product in popular_products %}
+                <div
+                  class="w-[250px] bg-white shadow rounded-lg p-4 flex-shrink-0 relative js-product-card js-search-item"
+                  data-name="{{ product.name|lower }}">
+                  {% if product.is_on_sale %}
+                  <span class="absolute top-2 right-2 bg-pink-600 text-white text-xs px-2 py-1 rounded">SALE</span>
+                  {% endif %}
+
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                    class="w-full h-40 object-cover rounded mb-2" />
+                  <h4 class="font-semibold text-sm mb-1">{{ product.name }}</h4>
+
+                  <div class="text-yellow-500 text-sm mb-2">
+                    {% for i in "12345" %}
+                    {% if forloop.counter <= product.rating %} ★ {% else %} ☆ {% endif %} {% endfor %} </div>
+
+                      <p class="text-gray-800 text-sm mb-2 js-product-price">
+                        ${{ product.price }}
+                        {% if product.original_price %}
+                        <span class="line-through text-gray-500 ml-2">${{ product.original_price }}</span>
+                        {% endif %}
+                      </p>
+
+                      <div class="product-actions">
+                        <a href="{% url 'product_detail' product.id %}" class="icon-btn detail-btn" title="View Details"
+                          aria-label="View Details">
+                          <i class="fa-solid fa-circle-info"></i>
+                        </a>
+                        <button class="icon-btn cart-btn" title="Add to Cart" aria-label="Add to Cart"
+                          data-product-id="{{ product.id }}">
+                          <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+                      </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+        </section>
+
+
+        <!-- Small Banners -->
+        <section class="small-banners">
+          {% for banner in banners %}
+          <div class="small-banner-card">
+            <img src="{{ banner.image.url }}" alt="{{ banner.title }}" />
+            <div class="small-banner-content">
+              <h3>{{ banner.title }}</h3>
+              <a href="{{ banner.link|default:'#' }}" class="btn-shop">Shop Now</a>
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+
+        <!-- New Arrivals -->
+        <section class="product-grid-section">
+          <h2>New Arrivals</h2>
+          <div class="product-grid">
+            {% for product in new_arrivals %}
+            <div class="product-card js-search-item" data-name="{{ product.name|lower }}">
+              {% if product.is_on_sale %}
+              <span class="sale-tag">SALE</span>
+              {% endif %}
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+              <h4>{{ product.name }}</h4>
+              <p class="price">${{ product.price }}</p>
+              <div class="product-actions">
+                <a href="{% url 'product_detail' product.id %}" class="icon-btn detail-btn" title="View Details"
+                  aria-label="View Details">
+                  <i class="fa-solid fa-circle-info"></i>
+                </a>
+                <button class="icon-btn cart-btn" title="Add to Cart" aria-label="Add to Cart"
+                  data-product-id="{{ product.id }}">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Blog -->
+    {% include "core/blog.html" %}
+
+    <!-- Footer -->
+    {% include "core/footer.html" %}
+    <!-- JavaScript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function updateCartDisplay() {
+          const cartCount = document.getElementById("cart-count");
+          const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+          if (totalQuantity > 0) {
+            cartCount.textContent = totalQuantity;
+            cartCount.style.display = "inline-block";
+          } else {
+            cartCount.style.display = "none";
+          }
+        }
+
+        const cartButtons = document.querySelectorAll(".cart-btn");
+        cartButtons.forEach(button => {
+          button.addEventListener("click", () => {
+            const productId = button.dataset.productId;
+            const productCard = button.closest(".js-product-card") || button.closest(".product-card");
+            if (!productCard) return;
+
+            const name = productCard.querySelector("h4")?.textContent.trim() || "Unknown Product";
+            let priceText = productCard.querySelector(".js-product-price")?.textContent
+              || productCard.querySelector(".price")?.textContent
+              || "$0";
+            const price = parseFloat(priceText.replace("$", "").trim()) || 0;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+              existingItem.quantity += 1;
+            } else {
+              cart.push({ id: productId, name, price, quantity: 1 });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartDisplay();
+            button.innerHTML = "Added";
+            button.disabled = true;
+            setTimeout(() => {
+              button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
+              button.disabled = false;
+            }, 1000);
+          });
+        });
+
+        updateCartDisplay();
+
+        // Scroll buttons for popular products
+        const scrollContainer = document.getElementById("productScrollContainer");
+        document.getElementById("scrollLeftBtn").addEventListener("click", () => {
+          scrollContainer.scrollBy({ left: -200, behavior: "smooth" });
+        });
+        document.getElementById("scrollRightBtn").addEventListener("click", () => {
+          scrollContainer.scrollBy({ left: 200, behavior: "smooth" });
+        });
+      });
+      document.getElementById('searchInput').addEventListener('input', function () {
+        const keyword = this.value.toLowerCase();
+        const filtered = allProducts.filter(p => p.name.toLowerCase().includes(keyword));
+        renderProducts(filtered);
+      });
+      //search 
+      const searchInput = document.getElementById('searchInput');
+
+      searchInput.addEventListener('input', function () {
+        const keyword = this.value.toLowerCase();
+        const items = document.querySelectorAll('.js-search-item');
+
+        items.forEach(item => {
+          const name = item.dataset.name;
+          if (name.includes(keyword)) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+      //for burgur
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+     
+    document.getElementById('mobile-search-btn').addEventListener('click', function () {
+      const mobileSearch = document.getElementById('mobile-search-box');
+      mobileSearch.classList.toggle('hidden');
+    });
+
+    </script>
+  
+
+
+  </body>
+
+</html>

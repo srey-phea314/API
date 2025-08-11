@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Test</title>
+</head>
+<body>
+  <pre id="result">Loading...</pre>
+
+  <script>
+    const token = "6916ca29b48540938b45d09dffe1d395";
+
+    fetch('http://127.0.0.1:8000/products/?token=' + token, {
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP error ' + res.status);
+      return res.json();
+    })
+    .then(data => {
+      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    })
+    .catch(err => {
+      document.getElementById('result').textContent = 'Error: ' + err.message;
+    });
+  </script>
+</body>
+</html>
