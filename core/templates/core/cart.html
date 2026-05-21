@@ -260,43 +260,44 @@
   </div>
 
   <script>
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    document.cookie.split(';').forEach(cookie => {
-      cookie = cookie.trim();
-      if (cookie.startsWith(name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+    //Get CSRF Token
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        document.cookie.split(';').forEach(cookie => {
+          cookie = cookie.trim();
+          if (cookie.startsWith(name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          }
+        });
       }
-    });
-  }
-  return cookieValue;
-}
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-const cartBody = document.getElementById("cart-body");
-const summaryItems = document.getElementById("summary-items");
-const summarySubtotal = document.getElementById("summary-subtotal");
-const summaryDiscount = document.getElementById("summary-discount");
-const summaryTotal = document.getElementById("summary-total");
+      return cookieValue;
+    }
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartBody = document.getElementById("cart-body");
+    const summaryItems = document.getElementById("summary-items");
+    const summarySubtotal = document.getElementById("summary-subtotal");
+    const summaryDiscount = document.getElementById("summary-discount");
+    const summaryTotal = document.getElementById("summary-total");
 
-let subtotal = 0;
-let discount = 0;
+    let subtotal = 0;
+    let discount = 0;
 
-function renderCart() {
-  cartBody.innerHTML = '';
-  let totalItems = 0;
-  subtotal = 0;
+    function renderCart() {
+      cartBody.innerHTML = '';
+      let totalItems = 0;
+      subtotal = 0;
 
-  if (cart.length === 0) {
-    cartBody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-gray-500">Your cart is empty.</td></tr>`;
-  }
+      if (cart.length === 0) {
+        cartBody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-gray-500">Your cart is empty.</td></tr>`;
+      }
 
-  cart.forEach((item, index) => {
-    const itemTotal = item.quantity * item.price;
-    subtotal += itemTotal;
-    totalItems += item.quantity;
-
-    cartBody.innerHTML += `
+      cart.forEach((item, index) => {
+        const itemTotal = item.quantity * item.price;
+        subtotal += itemTotal;
+        totalItems += item.quantity;
+        //Add row for this item to the table
+        cartBody.innerHTML += `
       <tr class="border-b">
         <td class="py-4">
           <div class="font-medium text-gray-900">${item.name}</div>
@@ -316,189 +317,189 @@ function renderCart() {
         </td>
       </tr>
     `;
-  });
+      });
+      //Update totals in the summary section
+      summaryItems.textContent = totalItems;
+      summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
+      summaryDiscount.textContent = `-$${discount.toFixed(2)}`;
+      summaryTotal.textContent = `$${(subtotal - discount).toFixed(2)}`;
+      //Save updated cart to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+    //update or remove quantity
+    function updateQty(index, delta) {
+      cart[index].quantity += delta;
+      if (cart[index].quantity <= 0) cart.splice(index, 1);
+      renderCart();
+    }
+    //remove from cart
+    function removeItem(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
 
-  summaryItems.textContent = totalItems;
-  summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
-  summaryDiscount.textContent = `-$${discount.toFixed(2)}`;
-  summaryTotal.textContent = `$${(subtotal - discount).toFixed(2)}`;
+    // confirm delete
+    function showConfirmModal() {
+      document.getElementById('confirmModal').classList.remove('hidden');
+    }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
+    function hideConfirmModal() {
+      document.getElementById('confirmModal').classList.add('hidden');
+    }
 
-function updateQty(index, delta) {
-  cart[index].quantity += delta;
-  if (cart[index].quantity <= 0) cart.splice(index, 1);
-  renderCart();
-}
+    function confirmClearCart() {
+      clearCart();
+      hideConfirmModal();
+    }
 
-function removeItem(index) {
-  cart.splice(index, 1);
-  renderCart();
-}
+    function clearCart() {
+      cart = [];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+      console.log("Cart cleared");
+    }
 
-// Clear Cart
-function showConfirmModal() {
-  document.getElementById('confirmModal').classList.remove('hidden');
-}
+    // Coupon
+    function applyCoupon() {
+      const code = document.getElementById("coupon").value.trim().toLowerCase();
+      if (code === "save10") {
+        discount = 10.00;
+        renderCart();
+        alert("Coupon applied!");
+      } else {
+        discount = 0;
+        renderCart();
+        alert("Invalid coupon.");
+      }
+    }
 
-function hideConfirmModal() {
-  document.getElementById('confirmModal').classList.add('hidden');
-}
+    // Load QR Codes from backend
+    fetch('/qrcodes/')
+      .then(res => res.json())
+      .then(data => {
+        const qrSelect = document.getElementById('qrSelect');
+        data.forEach(qr => {
+          qrSelect.innerHTML += `<option value="${qr.id}" data-img="${qr.qrImage}">${qr.qrName}</option>`;
+        });
+      })
+      .catch(err => {
+        console.error('Failed to load QR codes:', err);
+      });
 
-function confirmClearCart() {
-  clearCart();
-  hideConfirmModal();
-}
+    document.getElementById('qrSelect').addEventListener('change', function () {
+      const selectedOption = this.selectedOptions[0];
+      const imgUrl = selectedOption ? selectedOption.getAttribute('data-img') : '';
 
-function clearCart() {
-  cart = [];
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
-  console.log("Cart cleared");
-}
-
-// Coupon
-function applyCoupon() {
-  const code = document.getElementById("coupon").value.trim().toLowerCase();
-  if (code === "save10") {
-    discount = 10.00;
-    renderCart();
-    alert("Coupon applied!");
-  } else {
-    discount = 0;
-    renderCart();
-    alert("Invalid coupon.");
-  }
-}
-
-// Load QR Codes from backend
-fetch('/qrcodes/')
-  .then(res => res.json())
-  .then(data => {
-    const qrSelect = document.getElementById('qrSelect');
-    data.forEach(qr => {
-      qrSelect.innerHTML += `<option value="${qr.id}" data-img="${qr.qrImage}">${qr.qrName}</option>`;
-    });
-  })
-  .catch(err => {
-    console.error('Failed to load QR codes:', err);
-  });
-
-document.getElementById('qrSelect').addEventListener('change', function () {
-  const selectedOption = this.selectedOptions[0];
-  const imgUrl = selectedOption ? selectedOption.getAttribute('data-img') : '';
-
-  const previewContainer = document.getElementById('qrImagePreviewContainer');
-  previewContainer.innerHTML = ''; 
-  if (imgUrl) {
-    const img = document.createElement('img');
-    img.src = imgUrl;
-    img.width = 120;
-    img.alt = 'Selected QR Code';
-    img.className = 'rounded border';
-    previewContainer.appendChild(img);
-  }
-});
-
-// Show QR preview when uploading an image
-document.getElementById('qrUpload').addEventListener('change', function () {
-  const previewContainer = document.getElementById('qrImagePreviewContainer');
-  previewContainer.innerHTML = '';
-  if (this.files && this.files[0]) {
-    const file = this.files[0];
-    const img = document.createElement('img');
-    img.width = 120;
-    img.alt = 'Uploaded QR Code';
-    img.className = 'rounded border';
-    previewContainer.appendChild(img);
-
-    const reader = new FileReader();
-    reader.onload = e => img.src = e.target.result;
-    reader.readAsDataURL(file);
-  }
-});
-
-// Checkout
-async function checkout() {
-  const name = document.getElementById('customerName').value.trim();
-  const phone = document.getElementById('customerPhone').value.trim();
-
-  if (!name || !phone || cart.length === 0) {
-    alert("Please fill in your name, phone, and add items to cart.");
-    return;
-  }
-
-  const totalAmount = subtotal - discount;
-
-  const formData = new FormData();
-  formData.append('customerName', name);
-  formData.append('customerPhone', phone);
-  formData.append('totalAmount', totalAmount);
-
-  // Add QR Code - either uploaded or selected
-  const qrUpload = document.getElementById('qrUpload');
-  const qrSelect = document.getElementById('qrSelect');
-
-  if (qrUpload.files.length > 0) {
-    formData.append('QRCodeInvoice', qrUpload.files[0]);
-  } else if (qrSelect.value && qrSelect.value !== "Select QR") {
-    formData.append('QRCodeInvoice', qrSelect.value);
-  } else {
-    alert("Please select or upload a QR code.");
-    return;
-  }
-
-  formData.append('items', JSON.stringify(cart.map(item => ({
-    productName: item.name,
-    price: item.price,
-    qty: item.quantity
-  }))));
-
-  try {
-    const response = await fetch('/orders/', {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': getCookie('csrftoken')
-      },
-      body: formData
+      const previewContainer = document.getElementById('qrImagePreviewContainer');
+      previewContainer.innerHTML = '';
+      if (imgUrl) {
+        const img = document.createElement('img');
+        img.src = imgUrl;
+        img.width = 120;
+        img.alt = 'Selected QR Code';
+        img.className = 'rounded border';
+        previewContainer.appendChild(img);
+      }
     });
 
-    if (!response.ok) throw new Error("Server error: " + response.status);
+    // Show QR preview when uploading an image
+    document.getElementById('qrUpload').addEventListener('change', function () {
+      const previewContainer = document.getElementById('qrImagePreviewContainer');
+      previewContainer.innerHTML = '';
+      if (this.files && this.files[0]) {
+        const file = this.files[0];
+        const img = document.createElement('img');
+        img.width = 120;
+        img.alt = 'Uploaded QR Code';
+        img.className = 'rounded border';
+        previewContainer.appendChild(img);
 
-    const order = await response.json();
+        const reader = new FileReader();
+        reader.onload = e => img.src = e.target.result;
+        reader.readAsDataURL(file);
+      }
+    });
 
-    alert("✅ Order placed successfully!");
-    renderInvoice(order);
-    cart = [];
-    renderCart();
-    loadOrderHistory();
+    // Checkout
+    async function checkout() {
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
 
-    document.getElementById('customerName').value = '';
-    document.getElementById('customerPhone').value = '';
-    document.getElementById('qrUpload').value = '';
-    document.getElementById('qrSelect').selectedIndex = 0;
-    document.getElementById('qrImagePreviewContainer').innerHTML = '';
-  } catch (error) {
-    console.error(error);
-  }
-}
+      if (!name || !phone || cart.length === 0) {
+        alert("Please fill in your name, phone, and add items to cart.");
+        return;
+      }
 
-// Invoice Display
-let currentOrderForPrint = null;
+      const totalAmount = subtotal - discount;
 
-function renderInvoice(order) {
-  currentOrderForPrint = order; 
-  const container = document.getElementById('invoiceContent');
-  const totalAmount = Number(order.totalAmount) || 0;
+      const formData = new FormData();
+      formData.append('customerName', name);
+      formData.append('customerPhone', phone);
+      formData.append('totalAmount', totalAmount);
 
-  // Prepare QR code HTML conditionally
-  const qrHtml = order.QRCodeInvoice
-    ? `<p><strong>Payment QR:</strong><br><img src="${order.QRCodeInvoice}" width="120" alt="QR Code"></p>`
-    : `<p><em>No QR code available.</em></p>`;
+      // Add QR Code - either uploaded or selected
+      const qrUpload = document.getElementById('qrUpload');
+      const qrSelect = document.getElementById('qrSelect');
 
-  // Prepare items HTML table
-  let itemsHtml = `
+      if (qrUpload.files.length > 0) {
+        formData.append('QRCodeInvoice', qrUpload.files[0]);
+      } else if (qrSelect.value && qrSelect.value !== "Select QR") {
+        formData.append('QRCodeInvoice', qrSelect.value);
+      } else {
+        alert("Please select or upload a QR code.");
+        return;
+      }
+
+      formData.append('items', JSON.stringify(cart.map(item => ({
+        productName: item.name,
+        price: item.price,
+        qty: item.quantity
+      }))));
+
+      try {
+        const response = await fetch('/orders/', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: formData
+        });
+
+        if (!response.ok) throw new Error("Server error: " + response.status);
+
+        const order = await response.json();
+
+        alert("✅ Order placed successfully!");
+        renderInvoice(order);
+        cart = [];
+        renderCart();
+        loadOrderHistory();
+
+        document.getElementById('customerName').value = '';
+        document.getElementById('customerPhone').value = '';
+        document.getElementById('qrUpload').value = '';
+        document.getElementById('qrSelect').selectedIndex = 0;
+        document.getElementById('qrImagePreviewContainer').innerHTML = '';
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+   
+    let currentOrderForPrint = null;
+ // show Invoice 
+    function renderInvoice(order) {
+      currentOrderForPrint = order;
+      const container = document.getElementById('invoiceContent');
+      const totalAmount = Number(order.totalAmount) || 0;
+
+      // Prepare QR code HTML conditionally
+      const qrHtml = order.QRCodeInvoice
+        ? `<p><strong>Payment QR:</strong><br><img src="${order.QRCodeInvoice}" width="120" alt="QR Code"></p>`
+        : `<p><em>No QR code available.</em></p>`;
+
+      // Prepare items HTML table
+      let itemsHtml = `
     <table class="table table-bordered w-full text-left">
       <thead>
         <tr>
@@ -507,11 +508,11 @@ function renderInvoice(order) {
       </thead>
       <tbody>
   `;
-  order.items.forEach(i => {
-    const qty = i.quantity ?? i.qty; 
-    const price = Number(i.price);
-    const subtotal = qty * price;
-    itemsHtml += `
+      order.items.forEach(i => {
+        const qty = i.quantity ?? i.qty;
+        const price = Number(i.price);
+        const subtotal = qty * price;
+        itemsHtml += `
       <tr>
         <td>${i.productName}</td>
         <td>${qty}</td>
@@ -519,15 +520,15 @@ function renderInvoice(order) {
         <td>$${subtotal.toFixed(2)}</td>
       </tr>
     `;
-  });
+      });
 
-  itemsHtml += `
+      itemsHtml += `
       </tbody>
     </table>
   `;
 
-  // Compose full invoice HTML
-  container.innerHTML = `
+      // Compose full invoice HTML
+      container.innerHTML = `
     <div class="space-y-4 font-sans text-gray-800">
       <p><strong>Order ID:</strong> ${order.id}</p>
       <p><strong>Customer:</strong> ${order.customerName}</p>
@@ -541,45 +542,45 @@ function renderInvoice(order) {
     </div>
   `;
 
-  showInvoice();
-}
-
-function showInvoice() {
-  document.getElementById('invoiceModal').classList.remove('hidden');
-}
-
-function hideInvoice() {
-  document.getElementById('invoiceModal').classList.add('hidden');
-}
-
-// Order History
-async function loadOrderHistory() {
-  try {
-    const response = await fetch('/orders/');
-    if (!response.ok) throw new Error("Failed to load order history");
-    const orders = await response.json();
-
-    const container = document.getElementById('orderHistoryContent');
-    container.innerHTML = '';
-
-    if (orders.length === 0) {
-      container.innerHTML = `<p class="text-gray-500">No orders found.</p>`;
-      return;
+      showInvoice();
     }
 
-    orders.forEach(order => {
-      const orderElem = document.createElement('div');
-      orderElem.className = "border p-3 rounded shadow-sm bg-white";
+    function showInvoice() {
+      document.getElementById('invoiceModal').classList.remove('hidden');
+    }
 
-      // display items inside the order
-      let itemsHTML = order.items.map(item => `
+    function hideInvoice() {
+      document.getElementById('invoiceModal').classList.add('hidden');
+    }
+
+    // Order History
+    async function loadOrderHistory() {
+      try {
+        const response = await fetch('/orders/');
+        if (!response.ok) throw new Error("Failed to load order history");
+        const orders = await response.json();
+
+        const container = document.getElementById('orderHistoryContent');
+        container.innerHTML = '';
+
+        if (orders.length === 0) {
+          container.innerHTML = `<p class="text-gray-500">No orders found.</p>`;
+          return;
+        }
+
+        orders.forEach(order => {
+          const orderElem = document.createElement('div');
+          orderElem.className = "border p-3 rounded shadow-sm bg-white";
+
+          // display items inside the order
+          let itemsHTML = order.items.map(item => `
         <div class="flex justify-between">
           <span>${item.productName}</span>
           <span>${item.quantity} × $${parseFloat(item.price).toFixed(2)}</span>
         </div>
       `).join('');
 
-      orderElem.innerHTML = `
+          orderElem.innerHTML = `
         <p><strong>Order ID:</strong> ${order.id}</p>
         <p><strong>Name:</strong> ${order.customerName}</p>
         <p><strong>Phone:</strong> ${order.customerPhone}</p>
@@ -588,54 +589,54 @@ async function loadOrderHistory() {
         <button class="mt-3 px-3 py-1 bg-pink-600 text-white rounded" onclick='renderInvoice(${JSON.stringify(order).replace(/'/g, "\\'")})'>View Invoice</button>
       `;
 
-      container.appendChild(orderElem);
-    });
+          container.appendChild(orderElem);
+        });
 
-  } catch (err) {
-    console.error(err);
-    document.getElementById('orderHistoryContent').innerHTML = `<p class="text-red-500">Error loading orders.</p>`;
-  }
-}
+      } catch (err) {
+        console.error(err);
+        document.getElementById('orderHistoryContent').innerHTML = `<p class="text-red-500">Error loading orders.</p>`;
+      }
+    }
 
-function showOrderHistory() {
-  const container = document.getElementById('orderHistoryContainer');
-  if (container) {
-    container.classList.remove('hidden');
-    loadOrderHistory();
-  }
-}
+    function showOrderHistory() {
+      const container = document.getElementById('orderHistoryContainer');
+      if (container) {
+        container.classList.remove('hidden');
+        loadOrderHistory();
+      }
+    }
 
-function hideOrderHistory() {
-  const container = document.getElementById('orderHistoryContainer');
-  if (container) {
-    container.classList.add('hidden');
-  }
-}
+    function hideOrderHistory() {
+      const container = document.getElementById('orderHistoryContainer');
+      if (container) {
+        container.classList.add('hidden');
+      }
+    }
 
-function printInvoice() {
-  if (!currentOrderForPrint) {
-    alert("No invoice to print!");
-    return;
-  }
+    function printInvoice() {
+      if (!currentOrderForPrint) {
+        alert("No invoice to print!");
+        return;
+      }
 
-  const order = currentOrderForPrint;
+      const order = currentOrderForPrint;
 
-  // Format order date nicely or fallback to today
-  let orderDateRaw = order.orderDate || order.orderDateString || new Date().toISOString();
-  const orderDate = new Date(orderDateRaw);
-  const formattedDate = orderDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+      // Format order date nicely or fallback to today
+      let orderDateRaw = order.orderDate || order.orderDateString || new Date().toISOString();
+      const orderDate = new Date(orderDateRaw);
+      const formattedDate = orderDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 
-  const qrHtml = order.QRCodeInvoice
-    ? `<img src="${order.QRCodeInvoice}" alt="QR Code" width="120" style="border:1px solid #ccc; border-radius:4px;">`
-    : `<em>No QR code available.</em>`;
+      const qrHtml = order.QRCodeInvoice
+        ? `<img src="${order.QRCodeInvoice}" alt="QR Code" width="120" style="border:1px solid #ccc; border-radius:4px;">`
+        : `<em>No QR code available.</em>`;
 
-  // Build items rows
-  let itemsRows = '';
-  order.items.forEach(item => {
-    const qty = item.quantity ?? item.qty;
-    const price = Number(item.price);
-    const subtotal = qty * price;
-    itemsRows += `
+      // Build items rows
+      let itemsRows = '';
+      order.items.forEach(item => {
+        const qty = item.quantity ?? item.qty;
+        const price = Number(item.price);
+        const subtotal = qty * price;
+        itemsRows += `
       <tr>
         <td style="padding: 8px; border: 1px solid #ddd;">${item.productName}</td>
         <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${qty}</td>
@@ -643,9 +644,9 @@ function printInvoice() {
         <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${subtotal.toFixed(2)}</td>
       </tr>
     `;
-  });
+      });
 
-  const html = `
+      const html = `
     <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto;">
       <h2 style="text-align: center; margin-bottom: 24px;">Order Date: ${formattedDate}</h2>
 
@@ -685,18 +686,18 @@ function printInvoice() {
     </div>
   `;
 
-  const printWindow = window.open('', '_blank');
-  printWindow.document.write('<html><head><title>Invoice</title></head><body>');
-  printWindow.document.write(html);
-  printWindow.document.write('</body></html>');
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
-}
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write('<html><head><title>Invoice</title></head><body>');
+      printWindow.document.write(html);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }
 
-// Initial render on page load
-renderCart();
+    // Initial render on page load
+    renderCart();
 
   </script>
 </body>

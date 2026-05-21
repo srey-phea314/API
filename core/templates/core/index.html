@@ -15,87 +15,87 @@
 </head>
 
 <body>
-   <body class="bg-gray-100 text-gray-800">
-  <!-- Top Bar -->
-  <div class="bg-pink border-b text-sm" style="background-color: #b61852;padding: 15px;">
-    <div class="container mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center gap-2">
-      <div class="flex flex-wrap space-x-4 items-center text-white text-center sm:text-left">
-        <span class="flex items-center gap-1">📞 Customer Service</span>
-        <span class="hidden sm:flex items-center gap-1">🚚 Free Shipping</span>
-        <span class="hidden sm:flex items-center gap-1">💸 Save 60% Off</span>
-      </div>
-      <div class="flex space-x-4 items-center text-white">
-        <span class="flex items-center gap-1">💬 Live Chat</span>
-        <span>❤️</span>
-        <span>🛒</span>
-      </div>
-    </div>
-  </div>
 
-  <header class="bg-white shadow sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl sm:text-3xl font-bold text-pink-600">Past&Now</h1>
-
-      <nav class="hidden md:flex space-x-6 text-gray-700">
-        <a href="#home" class="hover:text-pink-600">Home</a>
-        <a href="#shop" class="hover:text-pink-600">Shop</a>
-        <a href="#blog" class="hover:text-pink-600">Blog</a>
-        <a href="{% url 'contact' %}" class="hover:text-pink-600">Contact</a>
-      </nav>
-
-      <!-- Right Side (Search + Buttons) -->
-      <div class="flex items-center space-x-4">
-        <!-- Mobile Toggle -->
-        <button id="menu-toggle" class="md:hidden focus:outline-none">
-          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-
-        <!-- Desktop Search Box -->
-        <div class="relative hidden lg:block">
-          <input id="searchInput" type="text" placeholder="Search..." class="pl-10 pr-3 py-1 border rounded-md" />
-          <svg class="w-5 h-5 absolute left-2 top-1.5 text-gray-500" fill="none" stroke="currentColor"
-            viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+  <body class="bg-gray-100 text-gray-800">
+    <!-- Top Bar -->
+    <div class="bg-pink border-b text-sm" style="background-color: #b61852;padding: 15px;">
+      <div class="container mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div class="flex flex-wrap space-x-4 items-center text-white text-center sm:text-left">
+          <span class="flex items-center gap-1">📞 Customer Service</span>
+          <span class="hidden sm:flex items-center gap-1">🚚 Free Shipping</span>
+          <span class="hidden sm:flex items-center gap-1">💸 Save 60% Off</span>
         </div>
-
-        <!-- Mobile Search Icon -->
-        <div class="lg:hidden">
-          <button id="mobile-search-btn" class="text-gray-700 text-xl">🔍</button>
-        </div>
-
-        <button id="register-btn"
-          class="text-sm px-3 py-1 border border-pink-700 text-white rounded-md"
-          style="background-color:#b61852;">
-          Sign up
-        </button>
-
-        <!-- Cart -->
-        <div class="relative">
-          <a href="{% url 'cart' %}" class="text-xl">🛒</a>
-          <span id="cart-count"
-            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
+        <div class="flex space-x-4 items-center text-white">
+          <span class="flex items-center gap-1">💬 Live Chat</span>
+          <span>❤️</span>
+          <span>🛒</span>
         </div>
       </div>
     </div>
 
-    <!-- Mobile Search Input -->
-    <div id="mobile-search-box" class="px-4 pb-2 hidden lg:hidden">
-      <input type="text" placeholder="Search..." class="w-full px-3 py-2 border rounded-md" />
-    </div>
+    <header class="bg-white shadow sticky top-0 z-50">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-2xl sm:text-3xl font-bold text-pink-600">Past&Now</h1>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 space-y-2 text-gray-700">
-      <a href="#home" class="block">Home</a>
-      <a href="#shop" class="block">Shop</a>
-      <a href="#blog" class="block">Blog</a>
-      <a href="{% url 'contact' %}" class="block">Contact</a>
-    </div>
-  </header>
+        <nav class="hidden md:flex space-x-6 text-gray-700">
+          <a href="#home" class="hover:text-pink-600">Home</a>
+          <a href="#shop" class="hover:text-pink-600">Shop</a>
+          <a href="#blog" class="hover:text-pink-600">Blog</a>
+          <a href="{% url 'contact' %}" class="hover:text-pink-600">Contact</a>
+        </nav>
+
+        <!-- Right Side (Search + Buttons) -->
+        <div class="flex items-center space-x-4">
+          <!-- Mobile Toggle -->
+          <button id="menu-toggle" class="md:hidden focus:outline-none">
+            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+
+          <!-- Desktop Search Box -->
+          <div class="relative hidden lg:block">
+            <input id="searchInput" type="text" placeholder="Search..." class="pl-10 pr-3 py-1 border rounded-md" />
+            <svg class="w-5 h-5 absolute left-2 top-1.5 text-gray-500" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+
+          <!-- Mobile Search Icon -->
+          <div class="lg:hidden">
+            <button id="mobile-search-btn" class="text-gray-700 text-xl">🔍</button>
+          </div>
+
+          <button id="register-btn" class="text-sm px-3 py-1 border border-pink-700 text-white rounded-md"
+            style="background-color:#b61852;">
+            Sign up
+          </button>
+
+          <!-- Cart -->
+          <div class="relative">
+            <a href="{% url 'cart' %}" class="text-xl">🛒</a>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Search Input -->
+      <div id="mobile-search-box" class="px-4 pb-2 hidden lg:hidden">
+        <input type="text" placeholder="Search..." class="w-full px-3 py-2 border rounded-md" />
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 space-y-2 text-gray-700">
+        <a href="#home" class="block">Home</a>
+        <a href="#shop" class="block">Shop</a>
+        <a href="#blog" class="block">Blog</a>
+        <a href="{% url 'contact' %}" class="block">Contact</a>
+      </div>
+    </header>
     <!-- Hero Section -->
     <section class="hero-section"
       style="background-image: url('{{ hero.image.url }}'); background-size: cover; background-position: center; min-height: 500px;"
@@ -269,7 +269,241 @@
         </section>
       </main>
     </div>
+    <div id="registerModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50">
 
+      <div class="flex justify-center items-center h-screen px-4">
+
+        <div class="bg-white w-full max-w-3xl
+          rounded-[80px]
+          overflow-hidden
+          shadow-2xl
+          grid md:grid-cols-2
+          border-2 border-pink-100">
+
+          <!-- LEFT SIDE -->
+          <div class="hidden md:flex relative">
+
+            <img src="https://i.pinimg.com/736x/d5/85/3f/d5853f7af5b62d9bb80364a08a5cc979.jpg"
+              class="w-full h-full object-cover">
+
+            <div class="absolute inset-0 bg-pink-500/30"></div>
+
+            <div class="absolute bottom-10 left-8 text-black-300">
+
+              <h1 class="text-4xl font-bold mb-3 text-pink-700">
+                Past&Now
+              </h1>
+
+              <p class="text-lg text-black-300 ">
+
+                Discover beauty with style ✨
+
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- RIGHT SIDE -->
+          <div class="p-10 bg-white relative">
+
+            <!-- Close -->
+            <button id="closeModal" class="absolute top-5 right-6
+              w-10 h-10
+              rounded-full
+              bg-white
+              shadow-md
+              hover:bg-pink-700
+              hover:text-white
+              transition duration-300">
+                            ✕
+            </button>
+
+
+            <h2 class="text-3xl font-bold text-gray-800">
+
+              Create Account
+
+            </h2>
+
+            <p class="text-gray-500 mb-8">
+
+              Join our beauty community 💖
+
+            </p>
+
+
+            <form class="space-y-4" autocomplete="off">
+
+              <!-- Username -->
+
+              <div class="relative">
+
+                <i class="fa-solid fa-user
+                absolute left-4 top-4
+                text-gray-400"></i>
+
+                <input type="text" name="username" autocomplete="off" placeholder="Username" class="w-full
+                  pl-12 p-3
+                  rounded-xl
+                  bg-gray-100
+                  focus:ring-2
+                  focus:ring-pink-400
+                  outline-none">
+
+              </div>
+
+
+              <!-- Email -->
+
+              <div class="relative">
+
+                <i class="fa-solid fa-envelope
+absolute left-4 top-4
+text-gray-400"></i>
+
+                <input type="email" name="email" autocomplete="off" placeholder="Email" class="w-full
+pl-12 p-3
+rounded-xl
+bg-gray-100
+focus:ring-2
+focus:ring-pink-400
+outline-none">
+
+              </div>
+
+
+              <!-- Password -->
+
+              <div class="relative">
+
+                <i class="fa-solid fa-lock
+absolute left-4 top-4
+text-gray-400"></i>
+
+                <input type="password" name="password" autocomplete="new-password" placeholder="Password" class="w-full
+pl-12 p-3
+rounded-xl
+bg-gray-100
+focus:ring-2
+focus:ring-pink-400
+outline-none">
+
+              </div>
+
+
+
+              <!-- Create Button -->
+
+              <button class="w-full
+bg-gradient-to-r
+from-pink-800
+to-purple-700
+text-white
+p-3
+rounded-xl
+hover:shadow-lg
+hover:scale-105
+transition duration-300">
+
+                Create Account
+
+              </button>
+
+
+
+              <!-- Forgot -->
+
+              <div class="text-center">
+
+                <a href="#" class="text-pink-700
+text-sm
+font-medium
+hover:underline">
+
+                  Forgot Password?
+
+                </a>
+
+              </div>
+
+            </form>
+
+
+
+            <!-- OR -->
+
+            <div class="flex items-center my-7">
+
+              <div class="flex-1 border-t"></div>
+
+              <span class="px-3 text-gray-400 text-sm">
+
+                OR
+
+              </span>
+
+              <div class="flex-1 border-t"></div>
+
+            </div>
+
+
+
+            <!-- Social -->
+
+            <div class="grid grid-cols-2 gap-3">
+
+              <button class="border p-3 rounded-xl
+hover:bg-red-50
+hover:shadow-md
+transition
+flex items-center justify-center gap-2">
+
+                <i class="fa-brands fa-google
+text-red-500 text-xl"></i>
+
+                Google
+
+              </button>
+
+
+              <button class="border p-3 rounded-xl
+hover:bg-blue-50
+hover:shadow-md
+transition
+flex items-center justify-center gap-2">
+
+                <i class="fa-brands fa-facebook
+text-blue-600 text-xl"></i>
+
+                Facebook
+
+              </button>
+
+            </div>
+
+
+
+            <p class="text-center mt-8 text-gray-500">
+
+              Already have account?
+
+              <a href="#" class="text-pink-600
+font-semibold
+hover:underline">
+
+                Login
+
+              </a>
+
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
     <!-- Blog -->
     {% include "core/blog.html" %}
 
@@ -278,99 +512,490 @@
     <!-- JavaScript -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        // REGISTER POPUP
+        const registerBtn =
+          document.getElementById(
+            "register-btn"
+          );
 
-        function updateCartDisplay() {
-          const cartCount = document.getElementById("cart-count");
-          const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const registerModal =
+          document.getElementById(
+            "registerModal"
+          );
 
-          if (totalQuantity > 0) {
-            cartCount.textContent = totalQuantity;
-            cartCount.style.display = "inline-block";
-          } else {
-            cartCount.style.display = "none";
-          }
+        const closeModal =
+          document.getElementById(
+            "closeModal"
+          );
+
+        if (
+          registerBtn &&
+          registerModal
+        ) {
+
+          registerBtn.addEventListener(
+            "click",
+            () => {
+
+              registerModal.classList.remove(
+                "hidden"
+              );
+
+            }
+          );
+
         }
 
-        const cartButtons = document.querySelectorAll(".cart-btn");
-        cartButtons.forEach(button => {
-          button.addEventListener("click", () => {
-            const productId = button.dataset.productId;
-            const productCard = button.closest(".js-product-card") || button.closest(".product-card");
-            if (!productCard) return;
+        if (
+          closeModal &&
+          registerModal
+        ) {
 
-            const name = productCard.querySelector("h4")?.textContent.trim() || "Unknown Product";
-            let priceText = productCard.querySelector(".js-product-price")?.textContent
-              || productCard.querySelector(".price")?.textContent
-              || "$0";
-            const price = parseFloat(priceText.replace("$", "").trim()) || 0;
+          closeModal.addEventListener(
+            "click",
+            () => {
 
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-              existingItem.quantity += 1;
-            } else {
-              cart.push({ id: productId, name, price, quantity: 1 });
+              registerModal.classList.add(
+                "hidden"
+              );
+
             }
+          );
 
-            localStorage.setItem("cart", JSON.stringify(cart));
-            updateCartDisplay();
-            button.innerHTML = "Added";
-            button.disabled = true;
-            setTimeout(() => {
-              button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
-              button.disabled = false;
-            }, 1000);
+        }
+
+        // close when click outside
+
+        if (registerModal) {
+
+          registerModal.addEventListener(
+            "click",
+            (e) => {
+
+              if (
+                e.target ===
+                registerModal
+              ) {
+
+                registerModal.classList.add(
+                  "hidden"
+                );
+
+              }
+
+            }
+          );
+
+        }
+
+
+
+        // ==========================
+        // CART
+        // ==========================
+
+        let cart =
+          JSON.parse(
+            localStorage.getItem(
+              "cart"
+            )
+          ) || [];
+
+        function updateCartDisplay() {
+
+          const cartCount =
+            document.getElementById(
+              "cart-count"
+            );
+
+          if (!cartCount) return;
+
+          const totalQuantity =
+            cart.reduce(
+              (sum, item) =>
+                sum +
+                item.quantity,
+              0
+            );
+
+          if (
+            totalQuantity > 0
+          ) {
+
+            cartCount.textContent =
+              totalQuantity;
+
+            cartCount.style.display =
+              "inline-block";
+
+          }
+
+          else {
+
+            cartCount.style.display =
+              "none";
+
+          }
+
+        }
+
+
+        const cartButtons =
+          document.querySelectorAll(
+            ".cart-btn"
+          );
+
+        cartButtons.forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                const productId =
+                  button.dataset
+                    .productId;
+
+                const productCard =
+                  button.closest(
+                    ".js-product-card"
+                  )
+                  ||
+                  button.closest(
+                    ".product-card"
+                  );
+
+                if (
+                  !productCard
+                ) return;
+
+                const name =
+                  productCard
+                    .querySelector(
+                      "h4"
+                    )
+                    ?.textContent
+                    .trim()
+                  ||
+                  "Unknown Product";
+
+
+                let priceText =
+                  productCard
+                    .querySelector(
+                      ".js-product-price"
+                    )
+                    ?.textContent
+                  ||
+                  productCard
+                    .querySelector(
+                      ".price"
+                    )
+                    ?.textContent
+                  ||
+                  "$0";
+
+
+                const price =
+                  parseFloat(
+                    priceText
+                      .replace(
+                        "$",
+                        ""
+                      )
+                  ) || 0;
+
+
+                const existingItem =
+                  cart.find(
+                    item =>
+                      item.id ===
+                      productId
+                  );
+
+
+                if (
+                  existingItem
+                ) {
+
+                  existingItem.quantity++;
+
+                }
+
+                else {
+
+                  cart.push({
+
+                    id:
+                      productId,
+
+                    name:
+                      name,
+
+                    price:
+                      price,
+
+                    quantity:
+                      1
+
+                  });
+
+                }
+
+                localStorage.setItem(
+
+                  "cart",
+
+                  JSON.stringify(
+                    cart
+                  )
+
+                );
+
+
+                updateCartDisplay();
+
+
+                button.innerHTML =
+                  "Added";
+
+                button.disabled =
+                  true;
+
+
+                setTimeout(
+                  () => {
+
+                    button.innerHTML =
+                      `<i class="fa-solid fa-cart-shopping"></i>`;
+
+                    button.disabled =
+                      false;
+
+                  },
+
+                  1000
+
+                );
+
+              });
+
           });
-        });
 
         updateCartDisplay();
 
-        // Scroll buttons for popular products
-        const scrollContainer = document.getElementById("productScrollContainer");
-        document.getElementById("scrollLeftBtn").addEventListener("click", () => {
-          scrollContainer.scrollBy({ left: -200, behavior: "smooth" });
-        });
-        document.getElementById("scrollRightBtn").addEventListener("click", () => {
-          scrollContainer.scrollBy({ left: 200, behavior: "smooth" });
-        });
-      });
-      document.getElementById('searchInput').addEventListener('input', function () {
-        const keyword = this.value.toLowerCase();
-        const filtered = allProducts.filter(p => p.name.toLowerCase().includes(keyword));
-        renderProducts(filtered);
-      });
-      //search 
-      const searchInput = document.getElementById('searchInput');
 
-      searchInput.addEventListener('input', function () {
-        const keyword = this.value.toLowerCase();
-        const items = document.querySelectorAll('.js-search-item');
 
-        items.forEach(item => {
-          const name = item.dataset.name;
-          if (name.includes(keyword)) {
-            item.style.display = '';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-      //for burgur
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-     
-    document.getElementById('mobile-search-btn').addEventListener('click', function () {
-      const mobileSearch = document.getElementById('mobile-search-box');
-      mobileSearch.classList.toggle('hidden');
-    });
+        // ==========================
+        // SEARCH
+        // ==========================
 
+        const searchInput =
+          document.getElementById(
+            "searchInput"
+          );
+
+        if (
+          searchInput
+        ) {
+
+          searchInput.addEventListener(
+            "input",
+
+            function () {
+
+              const keyword =
+                this.value
+                  .toLowerCase();
+
+              const items =
+                document.querySelectorAll(
+                  ".js-search-item"
+                );
+
+
+              items.forEach(
+                item => {
+
+                  const name =
+                    item.dataset
+                      .name
+                      ?.toLowerCase()
+                    || "";
+
+
+                  if (
+                    name.includes(
+                      keyword
+                    )
+                  ) {
+
+                    item.style.display =
+                      "";
+
+                  }
+
+                  else {
+
+                    item.style.display =
+                      "none";
+
+                  }
+
+                });
+
+            });
+
+        }
+
+
+
+        // ==========================
+        // BURGER MENU
+        // ==========================
+
+        const menuToggle =
+          document.getElementById(
+            "menu-toggle"
+          );
+
+        const mobileMenu =
+          document.getElementById(
+            "mobile-menu"
+          );
+
+
+        if (
+          menuToggle &&
+          mobileMenu
+        ) {
+
+          menuToggle.addEventListener(
+            "click",
+
+            () => {
+
+              mobileMenu
+                .classList.toggle(
+                  "hidden"
+                );
+
+            });
+
+        }
+
+
+
+        // ==========================
+        // MOBILE SEARCH
+        // ==========================
+
+        const mobileSearchBtn =
+          document.getElementById(
+            "mobile-search-btn"
+          );
+
+
+        if (
+          mobileSearchBtn
+        ) {
+
+          mobileSearchBtn.addEventListener(
+            "click",
+
+            () => {
+
+              const mobileSearch =
+
+                document.getElementById(
+                  "mobile-search-box"
+                );
+
+
+              if (
+                mobileSearch
+              ) {
+
+                mobileSearch
+                  .classList.toggle(
+                    "hidden"
+                  );
+
+              }
+
+            });
+
+        }
+
+
+
+        // ==========================
+        // PRODUCT SCROLL
+        // ==========================
+
+        const scrollContainer =
+          document.getElementById(
+            "productScrollContainer"
+          );
+
+        const leftBtn =
+          document.getElementById(
+            "scrollLeftBtn"
+          );
+
+        const rightBtn =
+          document.getElementById(
+            "scrollRightBtn"
+          );
+
+
+        if (
+
+          scrollContainer &&
+          leftBtn &&
+          rightBtn
+
+        ) {
+
+          leftBtn.addEventListener(
+
+            "click",
+
+            () => {
+
+              scrollContainer.scrollBy({
+
+                left: -250,
+
+                behavior:
+                  "smooth"
+
+              });
+
+            });
+
+
+          rightBtn.addEventListener(
+
+            "click",
+
+            () => {
+
+              scrollContainer.scrollBy({
+
+                left: 250,
+
+                behavior:
+                  "smooth"
+
+              });
+
+            });
+
+        }
+
+      });
     </script>
-  
-
-
   </body>
 
 </html>

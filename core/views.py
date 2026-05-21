@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser,IsAuthenticated
 from .models import AccessToken
 from .authentication import QueryParamAccessTokenAuthentication
-
+from .permissions import IsAdminOrReadOnly
 from .models import AccessToken
 import uuid
 from rest_framework import status
@@ -159,7 +159,8 @@ def product_detail(request, id):
     details = product.productdetail_set.all()
     size_options = SizeOption.objects.all()
     return render(request, 'core/product_detail.html', {'product': product, 'details': details, 'size_options': size_options})
-
+def register(request):
+    return render(request,'core/register.html')
 
 def cart_view(request):
     order = Order.objects.order_by('-orderDate').first()
@@ -182,7 +183,8 @@ class ProductImageViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAdminOrReadOnly]
+    
 class ProductViewSet(viewsets.ModelViewSet):
 
     queryset = Product.objects.all()

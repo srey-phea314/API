@@ -43,12 +43,14 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'assignment',
     'rest_framework_simplejwt',
+    'django_extensions',
 
 
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
    
 }
@@ -127,8 +129,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
