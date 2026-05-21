@@ -269,263 +269,80 @@
         </section>
       </main>
     </div>
-    <div id="registerModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50">
 
-      <div class="flex justify-center items-center h-screen px-4">
-
-        <div class="bg-white w-full max-w-3xl
-          rounded-[80px]
-          overflow-hidden
-          shadow-2xl
-          grid md:grid-cols-2
-          border-2 border-pink-100">
-
-          <!-- LEFT SIDE -->
-          <div class="hidden md:flex relative">
-            <div class="absolute inset-0 bg-pink-500/30"></div>
-
-            <div class="absolute top-10 left-8 text-white">
-
-              <h1 class="text-4xl font-bold mb-3 text-pink-700">
-                Past&Now
-              </h1>
-
-              <p class="text-lg text-white-300">
-                Discover beauty with style ✨
-
-              </p>
-
-            </div>
-
-            <img src="https://i.pinimg.com/736x/d5/85/3f/d5853f7af5b62d9bb80364a08a5cc979.jpg"
-              class="w-full h-full object-cover">
-
-
-
-          </div>
-
-
-          <!-- RIGHT SIDE -->
-          <div class="p-10 bg-white relative">
-
-            <!-- Close -->
-            <button id="closeModal" class="absolute top-5 right-6
-              w-10 h-10
-              rounded-full
-              bg-white
-              shadow-md
-              hover:bg-pink-700
-              hover:text-white
-              transition duration-300">
-              ✕
-            </button>
-
-
-            <h2 class="text-3xl font-bold text-gray-800">
-
-              Create Account
-
-            </h2>
-
-            <p class="text-gray-500 mb-8">
-
-              Join our beauty community 💖
-
-            </p>
-
-            <form method="POST" action="{% url 'register' %}" class="space-y-4" autocomplete="off">
-
-              {% csrf_token %}
-
-              <!-- Username -->
-              <div class="relative">
-
-                <i class="fa-solid fa-user
-        absolute left-4 top-4
-        text-gray-400"></i>
-
-                <input type="text" name="username" required placeholder="Username" class="w-full
-        pl-12 p-3
-        rounded-xl
-        bg-gray-100
-        focus:ring-2
-        focus:ring-pink-400
-        outline-none">
-
-              </div>
-
-
-              <!-- Email -->
-              <div class="relative">
-
-                <i class="fa-solid fa-envelope
-        absolute left-4 top-4
-        text-gray-400"></i>
-
-                <input type="email" name="email" required placeholder="Email" class="w-full
-        pl-12 p-3
-        rounded-xl
-        bg-gray-100
-        focus:ring-2
-        focus:ring-pink-400
-        outline-none">
-
-              </div>
-
-
-              <!-- Password -->
-              <div class="relative">
-
-                <i class="fa-solid fa-lock
-        absolute left-4 top-4
-        text-gray-400"></i>
-
-                <input type="password" name="password" required placeholder="Password" class="w-full
-        pl-12 p-3
-        rounded-xl
-        bg-gray-100
-        focus:ring-2
-        focus:ring-pink-400
-        outline-none">
-
-              </div>
-
-
-              <button type="submit" class="w-full
-                bg-gradient-to-r
-                from-pink-800
-                to-purple-700
-                text-white
-                p-3
-                rounded-xl
-                hover:shadow-lg
-                hover:scale-105
-                transition">
-                Create Account
-              </button>
-              <div class="forgetpw">
-                <a href="#" class="text-sm text-pink-500 hover:underline text-center">
-                  Forgot password?
-                </a>
-              </div>
-            </form>
-
-            <div class="flex items-center my-7">
-
-              <div class="flex-1 border-t"></div>
-
-              <span class="px-3 text-gray-400 text-sm">
-
-                OR
-
-              </span>
-
-              <div class="flex-1 border-t"></div>
-
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-
-              <button class="border p-3 rounded-xl
-                hover:bg-red-50
-                hover:shadow-md
-                transition
-                flex items-center justify-center gap-2">
-
-                <i class="fa-brands fa-google
-                text-red-500 text-xl"></i>
-
-                Google
-
-              </button>
-
-
-              <button class="border p-3 rounded-xl
-                hover:bg-blue-50
-                hover:shadow-md
-                transition
-                flex items-center justify-center gap-2">
-
-                <i class="fa-brands fa-facebook
-                text-blue-600 text-xl"></i>
-
-                Facebook
-
-              </button>
-
-            </div>
-
-
-
-            <p class="text-center mt-8 text-gray-500">
-              Already have account?
-              <a href="#" id="login-btn" class="text-pink-600 font-semibold hover:underline">
-                Login
-              </a>
-            </p>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <!-- LOGIN MODAL -->
-<div id="loginModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-50">
+<div id="registerModal"
+  class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50">
 
   <div class="flex justify-center items-center h-screen px-4">
 
     <!-- CARD -->
-    <div class="w-full max-w-md relative">
+    <div class="relative bg-white w-full max-w-3xl rounded-[70px] overflow-hidden shadow-2xl grid md:grid-cols-2 border border-pink-100">
 
-      <!-- glow background -->
-      <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-[35px] blur opacity-30"></div>
+      <!-- LEFT SIDE -->
+      <div class="hidden md:flex relative">
 
-      <div class="relative bg-white rounded-[35px] shadow-2xl p-8 overflow-hidden">
+        <img src="https://i.pinimg.com/736x/d5/85/3f/d5853f7af5b62d9bb80364a08a5cc979.jpg"
+          class="w-full h-full object-cover">
 
-        <!-- top decoration -->
-        <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-50"></div>
+        <div class="absolute inset-0 bg-pink-500/30"></div>
 
-        <!-- CLOSE -->
-        <button id="closeLogin"
+        <div class="absolute bottom-8 left-8 text-white">
+          <h1 class="text-4xl font-bold">Past&Now</h1>
+          <p class="text-sm mt-2">Discover beauty with style ✨</p>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="p-8 relative bg-white">
+
+        <!-- MESSAGE BOX (FIXED POSITION) -->
+        <div id="msgBox"
+          class="hidden absolute top-4 left-1/2 -translate-x-1/2 w-[90%] text-center p-3 rounded-xl text-sm shadow-md">
+        </div>
+
+        <!-- CLOSE BUTTON -->
+        <button id="closeModal"
           class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 hover:bg-pink-500 hover:text-white transition">
           ✕
         </button>
 
         <!-- TITLE -->
-        <div class="text-center mb-6">
-          <h2 class="text-3xl font-bold text-gray-800">Welcome Back 👋</h2>
-          <p class="text-gray-500 text-sm mt-1">Login to continue shopping</p>
-        </div>
+        <h2 class="text-2xl font-bold text-gray-800">Create Account</h2>
+        <p class="text-gray-500 mb-6">Join our beauty community 💖</p>
 
         <!-- FORM -->
-        <form class="space-y-4">
+        <form method="POST" action="{% url 'register' %}" class="space-y-4" autocomplete="off">
+          {% csrf_token %}
+
+          <!-- USERNAME -->
+            <input type="text" name="reg_user" placeholder="Username" autocomplete="off">
+          <input type="text" name="username" placeholder="Username"
+            class="w-full p-3 rounded-xl bg-gray-100 focus:ring-2 focus:ring-pink-400 outline-none"autocomplete="off">
 
           <!-- EMAIL -->
-          <div class="relative">
-            <i class="fa-solid fa-envelope absolute left-4 top-4 text-pink-400"></i>
-            <input type="email" placeholder="Email"
-              class="w-full pl-12 p-3 rounded-xl bg-pink-50 focus:ring-2 focus:ring-pink-400 outline-none">
-          </div>
+           <input type="email" name="reg_mail" placeholder="Email" autocomplete="off">
+          
+          <input type="email" name="email" placeholder="Email"
+            class="w-full p-3 rounded-xl bg-gray-100 focus:ring-2 focus:ring-pink-400 outline-none" >
 
           <!-- PASSWORD -->
-          <div class="relative">
-            <i class="fa-solid fa-lock absolute left-4 top-4 text-pink-400"></i>
-            <input type="password" placeholder="Password"
-              class="w-full pl-12 p-3 rounded-xl bg-pink-50 focus:ring-2 focus:ring-pink-400 outline-none">
-          </div>
+           <input type="password" name="reg_pass" placeholder="Password" autocomplete="new-password">
+          <input type="password" name="password" placeholder="Password"
+            class="w-full p-3 rounded-xl bg-gray-100 focus:ring-2 focus:ring-pink-400 outline-none">
 
           <!-- BUTTON -->
-          <button class="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white p-3 rounded-xl hover:scale-105 transition">
-            Login
+          <button type="submit"
+            class="w-full bg-gradient-to-r from-pink-700 to-purple-700 text-white p-3 rounded-xl hover:scale-105 transition">
+            Create Account
           </button>
 
+          <!-- FORGOT -->
+          <div class="text-center">
+            <a href="#" class="text-sm text-pink-500 hover:underline">
+              Forgot password?
+            </a>
+          </div>
         </form>
-
-        <!-- FORGOT -->
-        <div class="text-center mt-4">
-          <a href="#" class="text-pink-600 text-sm hover:underline">
-            Forgot password?
-          </a>
-        </div>
 
         <!-- OR -->
         <div class="flex items-center my-6">
@@ -535,32 +352,132 @@
         </div>
 
         <!-- SOCIAL -->
-        <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
 
-          <button class="w-full border p-3 rounded-xl flex items-center justify-center gap-3 hover:bg-red-50 transition">
-            <i class="fa-brands fa-google text-red-500 text-lg"></i>
-            Continue with Google
+          <button class="border p-3 rounded-xl flex items-center justify-center gap-2 hover:bg-red-50 transition">
+            <i class="fa-brands fa-google text-red-500"></i>
+            Google
           </button>
 
-          <button class="w-full border p-3 rounded-xl flex items-center justify-center gap-3 hover:bg-blue-50 transition">
-            <i class="fa-brands fa-facebook text-blue-600 text-lg"></i>
-            Continue with Facebook
+          <button class="border p-3 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-50 transition">
+            <i class="fa-brands fa-facebook text-blue-600"></i>
+            Facebook
           </button>
 
         </div>
 
         <!-- SWITCH -->
-        <p class="text-center mt-6 text-sm text-gray-500">
-          Don't have an account?
-          <span id="goRegister" class="text-pink-600 font-semibold cursor-pointer hover:underline">
-            Sign up
-          </span>
+        <p class="text-center mt-6 text-gray-500">
+          Already have account?
+          <a href="#" id="login-btn" class="text-pink-600 font-semibold hover:underline">
+            Login
+          </a>
         </p>
 
       </div>
     </div>
   </div>
 </div>
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-50">
+      <div id="msgBox" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
+      <div class="flex justify-center items-center h-screen px-4">
+
+        <!-- CARD -->
+        <div class="w-full max-w-md relative">
+
+          <!-- glow background -->
+          <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-[35px] blur opacity-30">
+          </div>
+
+          <div class="relative bg-white rounded-[35px] shadow-2xl p-8 overflow-hidden">
+
+            <!-- top decoration -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-50"></div>
+
+            <!-- CLOSE -->
+            <button id="closeLogin"
+              class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 hover:bg-pink-500 hover:text-white transition">
+              ✕
+            </button>
+
+            <!-- TITLE -->
+            <div class="text-center mb-6">
+              <h2 class="text-3xl font-bold text-gray-800">Welcome Back 👋</h2>
+              <p class="text-gray-500 text-sm mt-1">Login to continue shopping</p>
+            </div>
+
+            <!-- FORM -->
+            <form class="space-y-4" autocomplete="off">
+              <input type="text" style="display:none">
+              <!-- Email -->
+              <div class="relative">
+                <i class="fa-solid fa-user
+                  absolute left-4 top-8
+                  text-gray-400"></i>
+              </div>
+              <input type="email" name="email" autocomplete="off" placeholder="Email"
+                class="w-full pl-12 p-3 rounded-xl bg-pink-50 focus:ring-2 focus:ring-pink-400 outline-none">
+                <!-- Password -->
+                <div class="relative">
+                <i class="fa-solid fa-lock
+                  absolute left-4 top-8
+                  text-gray-400"></i>
+                </div>
+              <input type="password" name="password" autocomplete="new-password" placeholder="Password"
+                class="w-full pl-12 p-3 rounded-xl bg-pink-50 focus:ring-2 focus:ring-pink-400 outline-none">
+
+              <!-- BUTTON -->
+              <button
+                class="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white p-3 rounded-xl hover:scale-105 transition">
+                Login
+              </button>
+
+            </form>
+
+            <!-- FORGOT -->
+            <div class="text-center mt-4">
+              <a href="#" class="text-pink-600 text-sm hover:underline">
+                Forgot password?
+              </a>
+            </div>
+
+            <!-- OR -->
+            <div class="flex items-center my-6">
+              <div class="flex-1 border-t"></div>
+              <span class="px-3 text-gray-400 text-sm">OR</span>
+              <div class="flex-1 border-t"></div>
+            </div>
+
+            <!-- SOCIAL -->
+            <div class="space-y-3">
+
+              <button
+                class="w-full border p-3 rounded-xl flex items-center justify-center gap-3 hover:bg-red-50 transition">
+                <i class="fa-brands fa-google text-red-500 text-lg"></i>
+                Continue with Google
+              </button>
+
+              <button
+                class="w-full border p-3 rounded-xl flex items-center justify-center gap-3 hover:bg-blue-50 transition">
+                <i class="fa-brands fa-facebook text-blue-600 text-lg"></i>
+                Continue with Facebook
+              </button>
+
+            </div>
+
+            <!-- SWITCH -->
+            <p class="text-center mt-6 text-sm text-gray-500">
+              Don't have an account?
+              <span id="goRegister" class="text-pink-600 font-semibold cursor-pointer hover:underline">
+                Sign up
+              </span>
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Blog -->
     {% include "core/blog.html" %}
 
@@ -568,179 +485,198 @@
     {% include "core/footer.html" %}
     <!-- JavaScript -->
     <script>
-   document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener("DOMContentLoaded", () => {
 
-  // =========================
-  // MODALS (LOGIN / REGISTER)
-  // =========================
-  const loginBtn = document.getElementById("login-btn");
-  const registerBtn = document.getElementById("register-btn");
+        // =========================
+        // MODALS (LOGIN / REGISTER)
+        // =========================
+        const loginBtn = document.getElementById("login-btn");
+        const registerBtn = document.getElementById("register-btn");
 
-  const loginModal = document.getElementById("loginModal");
-  const registerModal = document.getElementById("registerModal");
+        const loginModal = document.getElementById("loginModal");
+        const registerModal = document.getElementById("registerModal");
 
-  const closeLogin = document.getElementById("closeLogin");
-  const closeRegister = document.getElementById("closeModal");
+        const closeLogin = document.getElementById("closeLogin");
+        const closeRegister = document.getElementById("closeModal");
 
-  const goRegister = document.getElementById("goRegister");
-  const goLogin = document.getElementById("goLogin");
+        const goRegister = document.getElementById("goRegister");
+        const goLogin = document.getElementById("goLogin");
 
-  function openLogin() {
-    if (registerModal) registerModal.classList.add("hidden");
-    if (loginModal) loginModal.classList.remove("hidden");
-  }
+        function openLogin() {
+          if (registerModal) registerModal.classList.add("hidden");
+          if (loginModal) loginModal.classList.remove("hidden");
+        }
 
-  function openRegister() {
-    if (loginModal) loginModal.classList.add("hidden");
-    if (registerModal) registerModal.classList.remove("hidden");
-  }
+        function openRegister() {
+          if (loginModal) loginModal.classList.add("hidden");
+          if (registerModal) registerModal.classList.remove("hidden");
+        }
 
-  function closeAllModals() {
-    loginModal?.classList.add("hidden");
-    registerModal?.classList.add("hidden");
-  }
+        function closeAllModals() {
+          loginModal?.classList.add("hidden");
+          registerModal?.classList.add("hidden");
+        }
 
-  loginBtn?.addEventListener("click", openLogin);
-  registerBtn?.addEventListener("click", openRegister);
+        loginBtn?.addEventListener("click", openLogin);
+        registerBtn?.addEventListener("click", openRegister);
 
-  closeLogin?.addEventListener("click", () => loginModal?.classList.add("hidden"));
-  closeRegister?.addEventListener("click", () => registerModal?.classList.add("hidden"));
+        closeLogin?.addEventListener("click", () => loginModal?.classList.add("hidden"));
+        closeRegister?.addEventListener("click", () => registerModal?.classList.add("hidden"));
 
-  goRegister?.addEventListener("click", openRegister);
-  goLogin?.addEventListener("click", openLogin);
+        goRegister?.addEventListener("click", openRegister);
+        goLogin?.addEventListener("click", openLogin);
 
-  loginModal?.addEventListener("click", (e) => {
-    if (e.target === loginModal) loginModal.classList.add("hidden");
-  });
-
-  registerModal?.addEventListener("click", (e) => {
-    if (e.target === registerModal) registerModal.classList.add("hidden");
-  });
-
-
-  // =========================
-  // CART SYSTEM
-  // =========================
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  function updateCartDisplay() {
-    const cartCount = document.getElementById("cart-count");
-    if (!cartCount) return;
-
-    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-    if (total > 0) {
-      cartCount.textContent = total;
-      cartCount.style.display = "inline-block";
-    } else {
-      cartCount.style.display = "none";
-    }
-  }
-
-  document.querySelectorAll(".cart-btn").forEach(button => {
-    button.addEventListener("click", () => {
-
-      const productId = button.dataset.productId;
-
-      const card =
-        button.closest(".js-product-card") ||
-        button.closest(".product-card");
-
-      if (!card) return;
-
-      const name =
-        card.querySelector("h4")?.textContent.trim() ||
-        "Unknown Product";
-
-      const priceText =
-        card.querySelector(".js-product-price")?.textContent ||
-        card.querySelector(".price")?.textContent ||
-        "$0";
-
-      const price = parseFloat(priceText.replace("$", "")) || 0;
-
-      const existing = cart.find(i => i.id === productId);
-
-      if (existing) {
-        existing.quantity++;
-      } else {
-        cart.push({
-          id: productId,
-          name,
-          price,
-          quantity: 1
+        loginModal?.addEventListener("click", (e) => {
+          if (e.target === loginModal) loginModal.classList.add("hidden");
         });
+
+        registerModal?.addEventListener("click", (e) => {
+          if (e.target === registerModal) registerModal.classList.add("hidden");
+        });
+
+
+        // =========================
+        // CART SYSTEM
+        // =========================
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function updateCartDisplay() {
+          const cartCount = document.getElementById("cart-count");
+          if (!cartCount) return;
+
+          const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+          if (total > 0) {
+            cartCount.textContent = total;
+            cartCount.style.display = "inline-block";
+          } else {
+            cartCount.style.display = "none";
+          }
+        }
+
+        document.querySelectorAll(".cart-btn").forEach(button => {
+          button.addEventListener("click", () => {
+
+            const productId = button.dataset.productId;
+
+            const card =
+              button.closest(".js-product-card") ||
+              button.closest(".product-card");
+
+            if (!card) return;
+
+            const name =
+              card.querySelector("h4")?.textContent.trim() ||
+              "Unknown Product";
+
+            const priceText =
+              card.querySelector(".js-product-price")?.textContent ||
+              card.querySelector(".price")?.textContent ||
+              "$0";
+
+            const price = parseFloat(priceText.replace("$", "")) || 0;
+
+            const existing = cart.find(i => i.id === productId);
+
+            if (existing) {
+              existing.quantity++;
+            } else {
+              cart.push({
+                id: productId,
+                name,
+                price,
+                quantity: 1
+              });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartDisplay();
+
+            button.innerHTML = "Added";
+            button.disabled = true;
+
+            setTimeout(() => {
+              button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
+              button.disabled = false;
+            }, 1000);
+
+          });
+        });
+
+        updateCartDisplay();
+
+
+        // =========================
+        // SEARCH
+        // =========================
+        const searchInput = document.getElementById("searchInput");
+
+        searchInput?.addEventListener("input", function () {
+          const keyword = this.value.toLowerCase();
+
+          document.querySelectorAll(".js-search-item").forEach(item => {
+            const name = item.dataset.name?.toLowerCase() || "";
+            item.style.display = name.includes(keyword) ? "" : "none";
+          });
+        });
+
+
+        // =========================
+        // MOBILE MENU
+        // =========================
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        menuToggle?.addEventListener("click", () => {
+          mobileMenu?.classList.toggle("hidden");
+        });
+
+
+        // =========================
+        // MOBILE SEARCH
+        // =========================
+        const mobileSearchBtn = document.getElementById("mobile-search-btn");
+
+        mobileSearchBtn?.addEventListener("click", () => {
+          document.getElementById("mobile-search-box")?.classList.toggle("hidden");
+        });
+
+
+        // =========================
+        // PRODUCT SCROLL
+        // =========================
+        const container = document.getElementById("productScrollContainer");
+        const leftBtn = document.getElementById("scrollLeftBtn");
+        const rightBtn = document.getElementById("scrollRightBtn");
+
+        leftBtn?.addEventListener("click", () => {
+          container?.scrollBy({ left: -250, behavior: "smooth" });
+        });
+
+        rightBtn?.addEventListener("click", () => {
+          container?.scrollBy({ left: 250, behavior: "smooth" });
+        });
+
+      });
+      function showMessage(type, text) {
+        const box = document.getElementById("msgBox");
+
+        if (!box) return;
+
+        box.classList.remove("hidden");
+
+        box.textContent = text;
+
+        if (type === "success") {
+          box.className =
+            "mb-4 p-3 rounded-xl text-sm bg-green-100 text-green-700 border border-green-300";
+        }
+
+        if (type === "error") {
+          box.className =
+            "mb-4 p-3 rounded-xl text-sm bg-red-100 text-red-700 border border-red-300";
+        }
       }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartDisplay();
-
-      button.innerHTML = "Added";
-      button.disabled = true;
-
-      setTimeout(() => {
-        button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
-        button.disabled = false;
-      }, 1000);
-
-    });
-  });
-
-  updateCartDisplay();
-
-
-  // =========================
-  // SEARCH
-  // =========================
-  const searchInput = document.getElementById("searchInput");
-
-  searchInput?.addEventListener("input", function () {
-    const keyword = this.value.toLowerCase();
-
-    document.querySelectorAll(".js-search-item").forEach(item => {
-      const name = item.dataset.name?.toLowerCase() || "";
-      item.style.display = name.includes(keyword) ? "" : "none";
-    });
-  });
-
-
-  // =========================
-  // MOBILE MENU
-  // =========================
-  const menuToggle = document.getElementById("menu-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  menuToggle?.addEventListener("click", () => {
-    mobileMenu?.classList.toggle("hidden");
-  });
-
-
-  // =========================
-  // MOBILE SEARCH
-  // =========================
-  const mobileSearchBtn = document.getElementById("mobile-search-btn");
-
-  mobileSearchBtn?.addEventListener("click", () => {
-    document.getElementById("mobile-search-box")?.classList.toggle("hidden");
-  });
-
-
-  // =========================
-  // PRODUCT SCROLL
-  // =========================
-  const container = document.getElementById("productScrollContainer");
-  const leftBtn = document.getElementById("scrollLeftBtn");
-  const rightBtn = document.getElementById("scrollRightBtn");
-
-  leftBtn?.addEventListener("click", () => {
-    container?.scrollBy({ left: -250, behavior: "smooth" });
-  });
-
-  rightBtn?.addEventListener("click", () => {
-    container?.scrollBy({ left: 250, behavior: "smooth" });
-  });
-
-});
 
     </script>
   </body>
