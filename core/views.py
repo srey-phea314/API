@@ -3,9 +3,10 @@ from .serializers import*
 from django.shortcuts import redirect, render,get_object_or_404
 from .models import *
 import json
+from django.contrib.auth.decorators import login_required
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser,IsAuthenticated
@@ -204,8 +205,26 @@ def cart_view(request):
         'total_items': total_items,
         'qrcodes': qrcodes,  
     })
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
 
-  
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("index")
+        else:
+            messages.error(request, "Invalid credentials")
+
+    return render(request, "login.html")
+@login_required
+def profile(request):
+    return render(request, "core/profile.html")  
+def logout_view(request):
+    logout(request)
+    return redirect("index")
 class ProductImageViewSet(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer

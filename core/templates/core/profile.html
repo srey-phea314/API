@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Profile</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body class="bg-pink-50 min-h-screen flex justify-center items-center">
+
+<div class="w-full max-w-4xl bg-white rounded-[40px] shadow-2xl overflow-hidden grid md:grid-cols-2">
+
+    <!-- LEFT -->
+    <div class="relative">
+
+        <img
+        src="https://i.pinimg.com/736x/d5/85/3f/d5853f7af5b62d9bb80364a08a5cc979.jpg"
+        class="w-full h-full object-cover">
+
+        <div class="absolute inset-0 bg-black/30"></div>
+
+        <div class="absolute bottom-8 left-8 text-white">
+
+            <h1 class="text-4xl font-bold">
+                Past&Now
+            </h1>
+
+            <p>
+                Your beauty profile ✨
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT -->
+    <div class="p-10">
+
+        <div class="flex justify-center">
+
+            <div class="w-28 h-28 rounded-full bg-pink-100 flex items-center justify-center">
+
+                <i class="fa-solid fa-user text-5xl text-pink-600"></i>
+
+            </div>
+
+        </div>
+
+        <h2 class="text-center text-3xl font-bold mt-4">
+            {{ request.user.username }}
+        </h2>
+
+        <p class="text-center text-gray-500">
+            {{ request.user.email }}
+        </p>
+
+
+        <div class="mt-10 space-y-4">
+
+            <div class="bg-pink-50 p-4 rounded-2xl">
+                <strong>Username:</strong>
+                {{ request.user.username }}
+            </div>
+
+            <div class="bg-pink-50 p-4 rounded-2xl">
+                <strong>Email:</strong>
+                {{ request.user.email }}
+            </div>
+
+        </div>
+
+
+        <div class="mt-8">
+
+            <a href="{% url 'logout' %}"
+            class="block text-center w-full bg-gradient-to-r from-pink-700 to-purple-700 text-white p-4 rounded-2xl hover:scale-105 transition">
+
+                <i class="fa-solid fa-right-from-bracket mr-2"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
