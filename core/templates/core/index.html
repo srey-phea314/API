@@ -282,25 +282,25 @@
 
           <!-- LEFT SIDE -->
           <div class="hidden md:flex relative">
-
-            <img src="https://i.pinimg.com/736x/d5/85/3f/d5853f7af5b62d9bb80364a08a5cc979.jpg"
-              class="w-full h-full object-cover">
-
             <div class="absolute inset-0 bg-pink-500/30"></div>
 
-            <div class="absolute bottom-10 left-8 text-black-300">
+            <div class="absolute top-10 left-8 text-white">
 
               <h1 class="text-4xl font-bold mb-3 text-pink-700">
                 Past&Now
               </h1>
 
-              <p class="text-lg text-black-300 ">
-
+              <p class="text-lg text-white-300">
                 Discover beauty with style ✨
 
               </p>
 
             </div>
+
+            <img src="https://i.pinimg.com/736x/d5/85/3f/d5853f7af5b62d9bb80364a08a5cc979.jpg"
+              class="w-full h-full object-cover">
+
+
 
           </div>
 
@@ -317,7 +317,7 @@
               hover:bg-pink-700
               hover:text-white
               transition duration-300">
-                            ✕
+              ✕
             </button>
 
 
@@ -333,106 +333,82 @@
 
             </p>
 
+            <form method="POST" action="{% url 'register' %}" class="space-y-4" autocomplete="off">
 
-            <form class="space-y-4" autocomplete="off">
+              {% csrf_token %}
 
               <!-- Username -->
-
               <div class="relative">
 
                 <i class="fa-solid fa-user
-                absolute left-4 top-4
-                text-gray-400"></i>
+        absolute left-4 top-4
+        text-gray-400"></i>
 
-                <input type="text" name="username" autocomplete="off" placeholder="Username" class="w-full
-                  pl-12 p-3
-                  rounded-xl
-                  bg-gray-100
-                  focus:ring-2
-                  focus:ring-pink-400
-                  outline-none">
+                <input type="text" name="username" required placeholder="Username" class="w-full
+        pl-12 p-3
+        rounded-xl
+        bg-gray-100
+        focus:ring-2
+        focus:ring-pink-400
+        outline-none">
 
               </div>
 
 
               <!-- Email -->
-
               <div class="relative">
 
                 <i class="fa-solid fa-envelope
-absolute left-4 top-4
-text-gray-400"></i>
+        absolute left-4 top-4
+        text-gray-400"></i>
 
-                <input type="email" name="email" autocomplete="off" placeholder="Email" class="w-full
-pl-12 p-3
-rounded-xl
-bg-gray-100
-focus:ring-2
-focus:ring-pink-400
-outline-none">
+                <input type="email" name="email" required placeholder="Email" class="w-full
+        pl-12 p-3
+        rounded-xl
+        bg-gray-100
+        focus:ring-2
+        focus:ring-pink-400
+        outline-none">
 
               </div>
 
 
               <!-- Password -->
-
               <div class="relative">
 
                 <i class="fa-solid fa-lock
-absolute left-4 top-4
-text-gray-400"></i>
+        absolute left-4 top-4
+        text-gray-400"></i>
 
-                <input type="password" name="password" autocomplete="new-password" placeholder="Password" class="w-full
-pl-12 p-3
-rounded-xl
-bg-gray-100
-focus:ring-2
-focus:ring-pink-400
-outline-none">
+                <input type="password" name="password" required placeholder="Password" class="w-full
+        pl-12 p-3
+        rounded-xl
+        bg-gray-100
+        focus:ring-2
+        focus:ring-pink-400
+        outline-none">
 
               </div>
 
 
-
-              <!-- Create Button -->
-
-              <button class="w-full
-bg-gradient-to-r
-from-pink-800
-to-purple-700
-text-white
-p-3
-rounded-xl
-hover:shadow-lg
-hover:scale-105
-transition duration-300">
-
+              <button type="submit" class="w-full
+                bg-gradient-to-r
+                from-pink-800
+                to-purple-700
+                text-white
+                p-3
+                rounded-xl
+                hover:shadow-lg
+                hover:scale-105
+                transition">
                 Create Account
-
               </button>
-
-
-
-              <!-- Forgot -->
-
-              <div class="text-center">
-
-                <a href="#" class="text-pink-700
-text-sm
-font-medium
-hover:underline">
-
-                  Forgot Password?
-
+             <div class="forgetpw">
+                <a href="#" class="text-sm text-pink-500 hover:underline text-center">
+                  Forgot password?
                 </a>
-
               </div>
-
             </form>
-
-
-
-            <!-- OR -->
 
             <div class="flex items-center my-7">
 
@@ -447,21 +423,16 @@ hover:underline">
               <div class="flex-1 border-t"></div>
 
             </div>
-
-
-
-            <!-- Social -->
-
             <div class="grid grid-cols-2 gap-3">
 
               <button class="border p-3 rounded-xl
-hover:bg-red-50
-hover:shadow-md
-transition
-flex items-center justify-center gap-2">
+                hover:bg-red-50
+                hover:shadow-md
+                transition
+                flex items-center justify-center gap-2">
 
-                <i class="fa-brands fa-google
-text-red-500 text-xl"></i>
+                                <i class="fa-brands fa-google
+                text-red-500 text-xl"></i>
 
                 Google
 
@@ -469,13 +440,13 @@ text-red-500 text-xl"></i>
 
 
               <button class="border p-3 rounded-xl
-hover:bg-blue-50
-hover:shadow-md
-transition
-flex items-center justify-center gap-2">
+                hover:bg-blue-50
+                hover:shadow-md
+                transition
+                flex items-center justify-center gap-2">
 
-                <i class="fa-brands fa-facebook
-text-blue-600 text-xl"></i>
+                                <i class="fa-brands fa-facebook
+                text-blue-600 text-xl"></i>
 
                 Facebook
 
@@ -486,17 +457,11 @@ text-blue-600 text-xl"></i>
 
 
             <p class="text-center mt-8 text-gray-500">
-
               Already have account?
-
-              <a href="#" class="text-pink-600
-font-semibold
-hover:underline">
-
-                Login
-
-              </a>
-
+              <a href="#" id="login-btn"
+              class="text-pink-600 font-semibold hover:underline">
+              Login
+            </a>
             </p>
 
           </div>
@@ -504,6 +469,7 @@ hover:underline">
         </div>
       </div>
     </div>
+    
     <!-- Blog -->
     {% include "core/blog.html" %}
 

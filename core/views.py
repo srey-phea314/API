@@ -1,6 +1,6 @@
 from rest_framework import viewsets, generics, permissions
 from .serializers import*
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import redirect, render,get_object_or_404
 from .models import *
 import json
 from rest_framework.exceptions import AuthenticationFailed
@@ -15,7 +15,7 @@ from .permissions import IsAdminOrReadOnly
 from .models import AccessToken
 import uuid
 from rest_framework import status
-
+from django.contrib import messages
 class LoginAPIView(APIView):
     def post(self, request):
         username = request.data.get('username')
@@ -160,7 +160,37 @@ def product_detail(request, id):
     size_options = SizeOption.objects.all()
     return render(request, 'core/product_detail.html', {'product': product, 'details': details, 'size_options': size_options})
 def register(request):
-    return render(request,'core/register.html')
+
+    if request.method == "POST":
+
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+
+        if User.objects.filter(username=username).exists():
+
+            messages.error(
+                request,
+                "Username already exists"
+            )
+
+            return redirect("index")
+
+
+        User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+
+        messages.success(
+            request,
+            "Account created successfully"
+        )
+
+        return redirect("index")
+
+    return redirect("index")
 
 def cart_view(request):
     order = Order.objects.order_by('-orderDate').first()
