@@ -3,95 +3,223 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Latest Skincare Blogs</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <style>
-    .blog-card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Latest Skincare Blogs</title>
+
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+
+/* ONLY BLOG SECTION */
+#blog {
+    max-width: 1300px;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Title */
+#blog .blog-title {
+    text-align: center;
+    font-size: 42px;
+    color: #d4577d;
+    font-weight: 700;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* Grid */
+#blog .blog-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 300px 300px;
+    gap: 18px;
+}
+
+/* Big image */
+#blog .blog-card:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+
+/* Top right image */
+#blog .blog-card:nth-child(2) {
+    grid-column: 2 / span 2;
+    grid-row: 1;
+}
+
+/* Card */
+#blog .blog-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    box-shadow: 0 10px 25px rgba(212, 87, 125, 0.25);
+    cursor: pointer;
+}
+
+/* Image */
+#blog .blog-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.6s;
+}
+
+#blog .blog-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Content */
+#blog .blog-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 22px;
+    background: linear-gradient(
+        to top,
+        rgba(85, 20, 45, 0.85),
+        rgba(85, 20, 45, 0.45),
+        transparent
+    );
+}
+
+/* Blog title */
+#blog .blog-content h3 {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Date */
+#blog .blog-date {
+    color: #ffd9e5;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+/* Description */
+#blog .blog-description {
+    color: #fff0f5;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+/* Button */
+#blog .read-btn {
+    background: linear-gradient(135deg, #ff6f91, #db6075);
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(219, 96, 117, 0.4);
+}
+
+#blog .read-btn:hover {
+    transform: translateY(-2px);
+    background: #c94b68;
+}
+
+/* Mobile */
+@media(max-width:768px) {
+
+    #blog {
+        padding: 10px;
     }
 
-    .blog-card:hover {
-      transform: translateY(-5px);
+    #blog .blog-title {
+        font-size: 30px;
     }
 
-    .blog-card img {
-      width: 100%;
-      aspect-ratio: 16 / 9; 
-      object-fit: cover;
-      display: block;
+    #blog .blog-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 15px;
     }
 
-    .blog-content {
-      padding: 1rem;
+    #blog .blog-card:nth-child(1),
+    #blog .blog-card:nth-child(2) {
+        grid-column: auto;
+        grid-row: auto;
     }
 
-    .blog-content h3 {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      font-size: 1.25rem; 
+    #blog .blog-card {
+        height: 280px;
     }
 
-    .blog-content p {
-      color: #4a5568;
-      margin-bottom: 0.75rem;
-      font-size: 1rem;
+    #blog .blog-content h3 {
+        font-size: 20px;
     }
+}
 
-    .blog-content a button {
-      background-color: rgb(219, 96, 117);
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      width: 100%;
-      text-align: center;
-    }
+</style>
 
-    .blog-content a button:hover {
-      background-color: #357ab8;
-    }
-
-    @media (min-width: 640px) {
-      .blog-content a button {
-        width: auto; 
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-      }
-    }
-  </style>
 </head>
 
 <body class="bg-gray-50">
-  <section id="blog" class="max-w-6xl mx-auto py-10 px-5 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-center mb-10">Latest Skincare Blogs</h2>
+
+
+<section id="blog">
+
+    <h2 class="blog-title">
+        Latest Skincare Blogs
+    </h2>
 
     {% if blogs %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {% for blog in blogs %}
-      <div class="blog-card">
-        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
-        <div class="blog-content">
-          <h3>{{ blog.title }}</h3>
-          <p>{{ blog.description|truncatewords:20 }}</p>
-          <a href="{{ blog.get_absolute_url }}">
-            <button type="button">Read More</button>
-          </a>
+
+    <div class="blog-grid">
+
+        {% for blog in blogs|slice:":4" %}
+
+        <div class="blog-card">
+
+            <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+
+            <div class="blog-content">
+
+                <h3>
+                    {{ blog.title }}
+                </h3>
+
+                <p class="blog-date">
+                    🌸 {{ blog.created_at|date:"F d, Y" }}
+                </p>
+
+                <p class="blog-description">
+                    {{ blog.description|truncatewords:15 }}
+                </p>
+
+                <a href="{{ blog.get_absolute_url }}">
+                    <button type="button" class="read-btn">
+                        Read More
+                    </button>
+                </a>
+
+            </div>
+
         </div>
-      </div>
-      {% endfor %}
+
+        {% endfor %}
+
     </div>
+
     {% else %}
-    <p class="text-center text-gray-500">No blogs available yet.</p>
+
+    <p class="text-center text-gray-500">
+        No blogs available yet.
+    </p>
+
     {% endif %}
-  </section>
+
+</section>
+
 </body>
 
 </html>
