@@ -87,7 +87,9 @@
       transition: all 0.3s ease;
       cursor: pointer;
     }
-
+     #a1{
+      color:gray;
+     }
     .back-link:hover {
       background-color: #a76f23;
       color: #fff;
@@ -120,6 +122,7 @@
         justify-content: center;
         padding: 14px 0;
       }
+
     }
   </style>
 </head>
@@ -130,7 +133,7 @@
         <img src="{{ blog.image.url }}" alt="{{ blog.title }}" />
         <div class="blog-text">
           <h1>{{ blog.title }}</h1>
-          <p>Posted on {{ blog.created_at|date:"F d, Y" }}</p>
+          <p id="a1">Posted on {{ blog.created_at|date:"F d, Y" }}</p>
           <div class="prose" style="color:black;">
             {{ blog.description|linebreaks }}
           </div>
