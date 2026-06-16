@@ -92,7 +92,9 @@
         </section>
         <section class="product-card" style="width: 600px;;">
             <p class="text-sm text-pink-700">{{ product.productID.category }}</p>
-            <h2 style="font-size: 28px;color:rgb(213, 71, 95);font-weight: bold;margin-right: 440px;">{{ product.name }}
+            <h2 style="font-size: 24px; color: rgb(213, 71, 95); font-weight: bold; margin-right: 400px;">
+                {{ product.name }}
+            </h2>
             </h2>
             <div class="flex items-center gap-2 text-sm text-gray-600 mt-2">
                 <div class="text-orange-400 text-lg" aria-label="Rating">
@@ -260,8 +262,8 @@
             </article>
         </div>
     </section>
-
-   {% include "core/footer.html" %}
+    <br><br>
+    {% include "core/footer.html" %}
 
     <!-- Cart Details Popup -->
     <div id="cart-details"
