@@ -158,4 +158,12 @@ class QRCode(models.Model):
     qrName = models.CharField(max_length=100)
     qrImage = models.ImageField(upload_to='images/qrcodes/')
     def __str__(self): return self.qrName 
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    full_name = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    address = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.full_name or self.user.username

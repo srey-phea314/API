@@ -7,7 +7,7 @@ on:
       - daneht
 
 jobs:
-  build-test:
+  build-test:   # CI
     runs-on: ubuntu-latest
 
     steps:
@@ -27,3 +27,14 @@ jobs:
       - name: Run tests
         run: |
           python manage.py test
+
+
+  deploy:   # CD
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy application
+        run: |
+          echo "Starting deployment..."
+          echo "Application deployed successfully"

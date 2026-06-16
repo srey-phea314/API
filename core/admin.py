@@ -12,6 +12,7 @@ admin.site.register(Blog)
 admin.site.register(QRCode)
 admin.site.register(ProductImage)
 admin.site.register(SizeOption)
+admin.site.register(Customer)
 @admin.register(AccessToken)
 class AccessTokenAdmin(admin.ModelAdmin):
     list_display = ('token', 'is_active', 'created_at')
